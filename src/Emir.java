@@ -53,16 +53,11 @@ public abstract class Emir {
 		this.uygulandiMi = uygulandiMi;
 	}
 	
-	public void emriUygula(){
-	}
+	public abstract void emriUygula();
 	
-	@Override
-	public String toString() {
-		return "\nVerilme Tarihi: " + verilme.getGun() + "." + verilme.getAy() + "." + verilme.getYil() + "\nUygulama Tarihi: " + uygulama.getGun() + "." + uygulama.getAy() + "." + uygulama.getYil() + "\nEmir Veren Komutan: " + emirVeren.getRutbe() + " " + emirVeren.getAd() + " " + emirVeren.getSoyad() +"\nUygulanma Durumu: "
-				+ (uygulandiMi == true ? "Uygulandý" : "Uygulanmadý");
-	}
+	public abstract String emirMetni();
 	
-	
+	public abstract String emirOzeti();
 	
 
 }

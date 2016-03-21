@@ -18,8 +18,8 @@ public class KomutanA extends Komutan{
 
 
 	@Override
-	public String toString() {
-		return super.toString() + "(A)";
+	public String kimlikAl() {
+		return getRutbe() + " " + getAd() + " " + getSoyad() + " (" + getApolet() + ") (A)";
 	}
 	
 	
