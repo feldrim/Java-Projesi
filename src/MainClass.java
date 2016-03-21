@@ -89,15 +89,7 @@ public class MainClass {
 					System.out.println("Geçeri bir seçim yapýnýz.");
 				}
 				
-				System.out.println("Emir Verilme Tarihi:\nGün:");
-				gun = sc.nextInt();
-				System.out.println("Ay: ");
-				ay = sc.next();
-				System.out.println("Yýl: ");
-				yil = sc.nextInt();
-				verilmeTarihi = new Tarih (gun, ay, yil);
-				System.out.println("Tarih: " + verilmeTarihi.tarihAl());
-				
+				verilmeTarihi = bugun;	
 				
 				System.out.println("Emir Uygulama Tarihi:\nGün:");
 				gun = sc.nextInt();
