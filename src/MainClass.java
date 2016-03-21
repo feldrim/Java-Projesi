@@ -209,7 +209,7 @@ public class MainClass {
 				if(uygulananEmir == 0)
 					System.out.println("Uygulanacak emir yok.");
 
-				bugun.gunSonra(1);
+				bugun = bugun.gunSonra(1);
 				System.out.println("Tarih: " + bugun.tarihAl());
 				break;
 			default:
