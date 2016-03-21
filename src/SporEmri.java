@@ -25,12 +25,16 @@ public class SporEmri extends Emir{
 	
 	public void emriUygula(){
 		this.setUygulandiMi(true);
-		System.out.println(this.getEmirNo() + " numaralý temizlik emri uygulandý.");
+		System.out.println(emirOzeti() + " uygulandý.");
 	}
 	
 	@Override
-	public String toString() {
-		return "\nEmir No: " + (super.getEmirNo() + 1) + "\nTürü: Spor\nAçýklama: " + aciklama + "\nTekrar Sayýsý: " + tekrarSayisi + super.toString();
+	public String emirMetni() {
+		return "\nEmir No: " + getEmirNo() + "\nTürü: Spor\nAçýklama: " + aciklama + "\nTekrar Sayýsý: " + tekrarSayisi + "\nVerilme Tarihi: " + getVerilme().tarihAl() + "\nUygulama Tarihi: " + getUygulama().tarihAl() + "\nEmir Veren Komutan: " + getEmirVeren().kimlikAl() +"\nUygulanma Durumu: " + (isUygulandiMi() == true ? "Uygulandý" : "Uygulanmadý");
+	}
+	@Override
+	public String emirOzeti() {
+		return "Emir No: "+ getEmirNo() + ": " + getEmirVeren().kimlikAl() + "tarafýndan verilen spor emri (" + aciklama + ", " + tekrarSayisi + " tekrar)";
 	}
 	
 }
