@@ -42,12 +42,7 @@ public abstract class Komutan {
 		this.soyad = soyad;
 		this.rutbe = rutbe;
 	}
-	
-
-	
+		
 	public abstract String kimlikAl();
 	
-	
-	
-
 }

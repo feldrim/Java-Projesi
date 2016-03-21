@@ -38,13 +38,13 @@ public class TemizlikEmri extends Emir{
 	private String turnTemizlikTuruString(){
 		switch(temizlikTuru){
 			case 1:
-				return "mýntýka";
+				return "Mýntýka Temizliði";
 			case 2:
-				return "kýþ Temizliði";
+				return "Kýþ Temizliði";
 			case 3: 
-				return "peyzaj";
+				return "Peyzaj Faaliyeti";
 			default: 
-				return "genel";
+				return "Genel Temizlik";
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class TemizlikEmri extends Emir{
 	}
 	@Override
 	public String emirOzeti() {
-		return "Emir No: "+ getEmirNo() + ": " + getEmirVeren().kimlikAl() + "tarafýndan verilen temizlik emri (" + bolgeAdi + "bölgesinde " + kisiSayisi + " kiþi ile " + turnTemizlikTuruString() + ")";
+		return "Emir No: "+ getEmirNo() + ", " + getEmirVeren().kimlikAl() + " tarafýndan verilen temizlik emri (" + bolgeAdi + " bölgesinde " + kisiSayisi + " kiþi ile " + turnTemizlikTuruString() + ")" + (isUygulandiMi() == true ? " +" : "");
 	}
 
 	
