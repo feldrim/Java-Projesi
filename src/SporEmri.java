@@ -34,7 +34,7 @@ public class SporEmri extends Emir{
 	}
 	@Override
 	public String emirOzeti() {
-		return "Emir No: "+ getEmirNo() + ": " + getEmirVeren().kimlikAl() + "tarafýndan verilen spor emri (" + aciklama + ", " + tekrarSayisi + " tekrar)";
+		return "Emir No: "+ getEmirNo() + ", " + getEmirVeren().kimlikAl() + " tarafýndan verilen spor emri (" + aciklama + ", " + tekrarSayisi + " tekrar)" + (isUygulandiMi() == true ? " +" : "");
 	}
 	
 }

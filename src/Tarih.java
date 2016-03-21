@@ -120,4 +120,20 @@ public class Tarih {
 		return gun + "." + ay + "." + yil;
 	}
 	
+	public Tarih gunSonra(int ileri) {
+				
+		int sonrakiGun = (gun + ileri) % 30;
+		if (sonrakiGun == 0) sonrakiGun = 30;
+		
+		int sonrakiAy = (ay + ((gun + ileri) / 30)) % 12;
+		if (sonrakiAy == 0) sonrakiAy = 12;
+		
+		int sonrakiYil = ( (ay + ((gun + ileri) / 30)) <= 12 ? yil : yil + 1);
+		
+		return new Tarih(sonrakiGun, Integer.toString(sonrakiAy), sonrakiYil);
+
+	}
+
+	
+	
 }
