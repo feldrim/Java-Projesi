@@ -45,7 +45,10 @@ public abstract class Komutan {
 	
 
 	
-	public abstract String kimlikAl();
+	@Override
+	public String toString() {
+		return rutbe + " " + ad + " " + soyad + " (" + apolet + ") ";
+	}
 	
 	
 	

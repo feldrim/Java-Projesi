@@ -55,7 +55,6 @@ public class MainClass {
 		System.out.println("Yýl: ");
 		int yil = sc.nextInt();
 		bugun = new Tarih (gun, ay, yil);
-		System.out.println("Tarih: " + bugun.tarihAl());
 		
 		//döngü
 		while(true){
@@ -89,7 +88,14 @@ public class MainClass {
 					System.out.println("Geçeri bir seçim yapýnýz.");
 				}
 				
-				verilmeTarihi = bugun;	
+				System.out.println("Emir Verilme Tarihi:\nGün:");
+				gun = sc.nextInt();
+				System.out.println("Ay: ");
+				ay = sc.next();
+				System.out.println("Yýl: ");
+				yil = sc.nextInt();
+				verilmeTarihi = new Tarih (gun, ay, yil);
+				
 				
 				System.out.println("Emir Uygulama Tarihi:\nGün:");
 				gun = sc.nextInt();
@@ -98,7 +104,7 @@ public class MainClass {
 				System.out.println("Yýl: ");
 				yil = sc.nextInt();
 				uygulamaTarihi = new Tarih (gun, ay, yil);
-				System.out.println("Tarih: " + uygulamaTarihi.tarihAl());
+				
 				
 				System.out.println("Emri Veren Komutanýn Apolet Numarasý: ");
 				do{

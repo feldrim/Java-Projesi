@@ -35,33 +35,28 @@ public class TemizlikEmri extends Emir{
 		this.kisiSayisi = kisiSayisi;
 	}
 	
-	private String turnTemizlikTuruString(){
+	private String turnTemizlikTuruString(int temizlikTuru){
 		switch(temizlikTuru){
 			case 1:
-				return "mýntýka";
+				return "Mýntýka";
 			case 2:
-				return "kýþ Temizliði";
+				return "Kýþ Temizliði";
 			case 3: 
-				return "peyzaj";
+				return "Peyzaj";
 			default: 
-				return "genel";
+				return "Tanýmlanmadý";
 		}
 	}
 	
 	public void emriUygula(){
 		this.setUygulandiMi(true);
-		System.out.println(emirOzeti() + " uygulandý.");
+		System.out.println(this.getEmirNo() + " numaralý temizlik emri uygulandý.");
 	}
 	
 	@Override
-	public String emirMetni() {
-		return "\nEmir No: " + (getEmirNo()) + "\nTürü: Temizlik\nTemizlik Bölgesi: " + bolgeAdi + "\nTemizlik Türü: " + turnTemizlikTuruString() + "(" + temizlikTuru + ")" + "\nKiþi Sayýsý: " + kisiSayisi + "\nVerilme Tarihi: " + getVerilme().tarihAl() + "\nUygulama Tarihi: " + getUygulama().tarihAl() + "\nEmir Veren Komutan: " + getEmirVeren().kimlikAl() +"\nUygulanma Durumu: " + (isUygulandiMi() == true ? "Uygulandý" : "Uygulanmadý");
+	public String toString() {
+		return "\nEmir No: " + (super.getEmirNo() + 1) + "\nTürü: Temizlik\nTemizlik Bölgesi: " + bolgeAdi + "\nTemizlik Türü: " + turnTemizlikTuruString(temizlikTuru) + "(" + temizlikTuru + ")" + "\nKiþi Sayýsý: " + kisiSayisi
+				 + super.toString();
 	}
-	@Override
-	public String emirOzeti() {
-		return "Emir No: "+ getEmirNo() + ": " + getEmirVeren().kimlikAl() + "tarafýndan verilen temizlik emri (" + bolgeAdi + "bölgesinde " + kisiSayisi + " kiþi ile " + turnTemizlikTuruString() + ")";
-	}
-
-	
 
 }

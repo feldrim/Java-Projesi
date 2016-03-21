@@ -10,8 +10,8 @@ public class KomutanB extends Komutan{
 	}
 	
 	@Override
-	public String kimlikAl() {
-		return getRutbe() + " " + getAd() + " " + getSoyad() + " (" + getApolet() + ") (B)";
+	public String toString() {
+		return super.toString() + "(B)";
 	}
 
 }
