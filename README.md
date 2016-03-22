@@ -20,4 +20,4 @@ Ek:
 1. Array yerine vector kullanılacaktır.
 2. Komutan ve Emir dizileri ayrı bir sınıf içinde yazılacak, ekleme ve sorgulama gibi işlemler burada yapılacaktır.
 3. Geçerli tarih kontrolü Tarih nesnesi içinde yapılacaktır.
-4. Exception check konusuna bakılarak hata durumları exception check ile ele alınacaktır.
+4. Exception check konusuna bakılarak hata durumları exception check ile kontrol edilecektir..
