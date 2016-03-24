@@ -1,5 +1,5 @@
 # Java-Projesi
-Java ve NYP dersi projesi
+##Java ve NYP dersi projesi
 
 1. Her bir emir 1'den başlayan sıra numarasına sahip olacaktır. Emir numaraları verilme sırasına göredir.
 2. Emir veren komutanın apolet numarası, emrin verildiği tarih ve emrin uygulanacağı tarih tutulmaktadır.
@@ -16,8 +16,9 @@ Java ve NYP dersi projesi
 13. Hareket türü string biçiminde olacaktır (Kaçınılmaz olarak).
 14. Emir uygulama işi çokbiçimli olacaktır.
 
-Ek:
-1. Array yerine vector kullanılacaktır.
-2. Komutan ve Emir dizileri ayrı bir sınıf içinde yazılacak, ekleme ve sorgulama gibi işlemler burada yapılacaktır.
-3. Geçerli tarih kontrolü Tarih nesnesi içinde yapılacaktır.
-4. Exception check konusuna bakılarak hata durumları exception check ile kontrol edilecektir.
+## Ek:
+
+- [X] Array yerine vector kullanılacaktır.
+- [X] Komutan ve Emir dizileri ayrı bir sınıf içinde yazılacak, ekleme ve sorgulama gibi işlemler burada yapılacaktır.
+- [X] Geçerli tarih kontrolü Tarih nesnesi içinde yapılacaktır.
+- [ ] Exception check konusuna bakılarak hata durumları exception check ile kontrol edilecektir.
