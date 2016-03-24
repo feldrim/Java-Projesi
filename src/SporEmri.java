@@ -1,40 +1,58 @@
 
-public class SporEmri extends Emir{
-	private String aciklama;
+public class SporEmri extends Emir {
+	private String hareketTuru;
 	private int tekrarSayisi;
-	
-	public String getAciklama() {
-		return aciklama;
+
+	public String hareketTuruAl() {
+		return hareketTuru;
 	}
-	public void setAciklama(String aciklama) {
-		this.aciklama = aciklama;
+
+	public void hareketTuruBelirle(String hareketTuru) {
+		this.hareketTuru = hareketTuru;
 	}
-	public int getTekrarSayisi() {
+
+	public int tekrarSayisiAl() {
 		return tekrarSayisi;
 	}
-	public void setTekrarSayisi(int tekrarSayisi) {
+
+	public void tekrarSayisiBelirle(int tekrarSayisi) {
 		this.tekrarSayisi = tekrarSayisi;
 	}
 
-	public SporEmri(int emirNo, Tarih verilme, Tarih uygulama, Komutan emirVeren, boolean uygulandiMi, String aciklama,
-			int tekrarSayisi) {
-		super(emirNo, verilme, uygulama, emirVeren, uygulandiMi);
-		this.aciklama = aciklama;
+	public SporEmri() {
+		super();
+		this.hareketTuru = null;
+		this.tekrarSayisi = 0;
+	}
+
+	public SporEmri(int emirNo, Tarih verilmeTarihi, Tarih uygulamaTarihi, Komutan emirVerenKomutan, boolean uygulamaDurumu,
+			String hareketTuru, int tekrarSayisi) {
+		super(emirNo, verilmeTarihi, uygulamaTarihi, emirVerenKomutan, uygulamaDurumu);
+		this.hareketTuru = hareketTuru;
 		this.tekrarSayisi = tekrarSayisi;
 	}
-	
-	public void emriUygula(){
-		this.setUygulandiMi(true);
+
+	@Override
+	public void emriUygula() {
+		this.uygulamaDurumuBelirle(true);
 		System.out.println(emirOzeti() + " uygulandý.");
 	}
-	
+
 	@Override
 	public String emirMetni() {
-		return "\nEmir No: " + getEmirNo() + "\nTürü: Spor\nAçýklama: " + aciklama + "\nTekrar Sayýsý: " + tekrarSayisi + "\nVerilme Tarihi: " + getVerilme().tarihAl() + "\nUygulama Tarihi: " + getUygulama().tarihAl() + "\nEmir Veren Komutan: " + getEmirVeren().kimlikAl() +"\nUygulanma Durumu: " + (isUygulandiMi() == true ? "Uygulandý" : "Uygulanmadý");
+		return "\nEmir No: " + emirNoAl() 
+				+ "\nTürü: Spor\nHareket Türü: " + hareketTuru 
+				+ "\nTekrar Sayýsý: " + tekrarSayisi 
+				+ "\nVerilme Tarihi: " + verilmeTarihiAl().tarihAl() 
+				+ "\nUygulama Tarihi: "	+ uygulamaTarihiAl().tarihAl() 
+				+ "\nEmir Veren Komutan: " + emirVerenKomutanAl().kimlikAl()
+				+ "\nUygulanma Durumu: " + (uygulamaDurumuAl() == true ? "Uygulandý" : "Uygulanmadý");
 	}
+
 	@Override
 	public String emirOzeti() {
-		return "Emir No: "+ getEmirNo() + ", " + getEmirVeren().kimlikAl() + " tarafýndan verilen spor emri (" + aciklama + ", " + tekrarSayisi + " tekrar)" + (isUygulandiMi() == true ? " +" : "");
+		return "Emir No: " + emirNoAl() + ", " + emirVerenKomutanAl().kimlikAl() + " tarafýndan verilen spor emri ("
+				+ hareketTuru + ", " + tekrarSayisi + " tekrar)" + (uygulamaDurumuAl() == true ? " (+)" : "");
 	}
-	
+
 }

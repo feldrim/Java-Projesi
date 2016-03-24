@@ -1,48 +1,56 @@
 
 public abstract class Komutan {
-	private int apolet;
+	private int apoletNumarasý;
 	private String ad;
 	private String soyad;
-	private String rutbe; //sonra int olarak ayarlanýp switch case ile seçmek mümkün olacak
-	public int getApolet() {
-		return apolet;
+	private String rutbe; // sonra int olarak ayarlanýp switch case ile seçsek?
+
+	public int apoletNumarasýAl() {
+		return apoletNumarasý;
 	}
-	public void setApolet(int apolet) {
-		this.apolet = apolet;
+
+	public void apoletNumarasýBelirle(int apoletNumarasý) {
+		this.apoletNumarasý = apoletNumarasý;
 	}
-	public String getAd() {
-		return (ad==null ? "" : ad);
+
+	public String adAl() {
+		return (ad == null ? "" : ad);
 	}
-	public void setAd(String ad) {
+
+	public void adBelirle(String ad) {
 		this.ad = ad;
 	}
-	public String getSoyad() {
-		return (soyad==null ? "" : soyad);
+
+	public String soyadAl() {
+		return (soyad == null ? "" : soyad);
 	}
-	public void setSoyad(String soyad) {
+
+	public void soyadBelirle(String soyad) {
 		this.soyad = soyad;
 	}
-	public String getRutbe() {
-		return (rutbe==null ? "" : rutbe);
+
+	public String rutbelAl() {
+		return (rutbe == null ? "" : rutbe);
 	}
-	public void setRutbe(String rutbe) {
+
+	public void rutbeBelirle(String rutbe) {
 		this.rutbe = rutbe;
 	}
-	
+
 	public Komutan() {
-		this.apolet = 0000;
+		this.apoletNumarasý = 0000;
 		this.ad = "";
 		this.soyad = "";
 		this.rutbe = "";
 	}
-	
+
 	public Komutan(int apolet, String ad, String soyad, String rutbe) {
-		this.apolet = apolet;
+		this.apoletNumarasý = apolet;
 		this.ad = ad;
 		this.soyad = soyad;
 		this.rutbe = rutbe;
 	}
-		
+
 	public abstract String kimlikAl();
-	
+
 }

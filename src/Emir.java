@@ -1,63 +1,71 @@
 
 public abstract class Emir {
 	private int emirNo;
-	private Tarih verilme;
-	private Tarih uygulama;
-	private Komutan emirVeren;
-	private boolean uygulandiMi;
-		
-	public int getEmirNo() {
+	private Tarih verilmeTarihi;
+	private Tarih uygulamaTarihi;
+	private Komutan emirVerenKomutan;
+	private boolean uygulamaDurumu;
+
+	public int emirNoAl() {
 		return emirNo;
 	}
-	public void setEmirNo(int emirNo) {
+
+	public void emirNoBelirle(int emirNo) {
 		this.emirNo = emirNo;
 	}
-	public Tarih getVerilme() {
-		return verilme;
+
+	public Tarih verilmeTarihiAl() {
+		return verilmeTarihi;
 	}
-	public void setVerilme(Tarih verilme) {
-		this.verilme = verilme;
+
+	public void verilmeTarihiBelirle(Tarih verilmeTarihi) {
+		this.verilmeTarihi = verilmeTarihi;
 	}
-	public Tarih getUygulama() {
-		return uygulama;
+
+	public Tarih uygulamaTarihiAl() {
+		return uygulamaTarihi;
 	}
-	public void setUygulama(Tarih uygulama) {
-		this.uygulama = uygulama;
+
+	public void uygulamaTarihiBelirle(Tarih uygulama) {
+		this.uygulamaTarihi = uygulama;
 	}
-	public boolean isUygulandiMi() {
-		return uygulandiMi;
+
+	public boolean uygulamaDurumuAl() {
+		return uygulamaDurumu;
 	}
-	public void setUygulandiMi(boolean uygulandiMi) {
-		this.uygulandiMi = uygulandiMi;
+
+	public void uygulamaDurumuBelirle(boolean uygulamaDurumu) {
+		this.uygulamaDurumu = uygulamaDurumu;
 	}
-	public Komutan getEmirVeren() {
-		return emirVeren;
+
+	public Komutan emirVerenKomutanAl() {
+		return emirVerenKomutan;
 	}
-	public void setEmirVeren(Komutan emirVeren) {
-		this.emirVeren = emirVeren;
+
+	public void emirVerenKomutanBelirle(Komutan emirVerenKomutan) {
+		this.emirVerenKomutan = emirVerenKomutan;
 	}
-	
+
 	public Emir() {
 		this.emirNo = 0;
-		this.verilme = null;
-		this.uygulama = null;
-		this.emirVeren = null;
-		this.uygulandiMi = false;
+		this.verilmeTarihi = null;
+		this.uygulamaTarihi = null;
+		this.emirVerenKomutan = null;
+		this.uygulamaDurumu = false;
 	}
-	
-	public Emir(int emirNo, Tarih verilme, Tarih uygulama, Komutan emirVeren, boolean uygulandiMi) {
+
+	public Emir(int emirNo, Tarih verilmeTarihi, Tarih uygulamaTarihi, Komutan emirVerenKomutan, boolean uygulamaDurumu) {
 		this.emirNo = emirNo;
-		this.verilme = verilme;
-		this.uygulama = uygulama;
-		this.emirVeren = emirVeren;
-		this.uygulandiMi = uygulandiMi;
+		this.verilmeTarihi = verilmeTarihi;
+		this.uygulamaTarihi = uygulamaTarihi;
+		this.emirVerenKomutan = emirVerenKomutan;
+		this.uygulamaDurumu = uygulamaDurumu;
 	}
-	
+
 	public abstract void emriUygula();
-	
+
 	public abstract String emirMetni();
-	
+
 	public abstract String emirOzeti();
-	
 
 }
