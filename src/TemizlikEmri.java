@@ -1,67 +1,80 @@
 
-public class TemizlikEmri extends Emir{
+public class TemizlikEmri extends Emir {
 	private String bolgeAdi;
 	private int temizlikTuru;
 	private int kisiSayisi;
-	
-	public String getBolgeAdi() {
+
+	public String bolgeAdiAl() {
 		return bolgeAdi;
 	}
-	public void setBolgeAdi(String bolgeAdi) {
+
+	public void bolgeAdiBelirle(String bolgeAdi) {
 		this.bolgeAdi = bolgeAdi;
-	}
-	public int getTemizlikTuru() {
-		return temizlikTuru;
-	}
-	public void setTemizlikTuru(int temizlikTuru) {
-		this.temizlikTuru = temizlikTuru;
-	}
-	public int getKisiSayisi() {
-		return kisiSayisi;
-	}
-	public void setKisiSayisi(int kisiSayisi) {
-		this.kisiSayisi = kisiSayisi;
-	}
-	
-	public TemizlikEmri() {
-		super();
-	}
-	
-	public TemizlikEmri(int emirNo, Tarih verilme, Tarih uygulama, Komutan emirVeren, boolean uygulandiMi, 
-			String bolgeAdi, int temizlikTuru, int kisiSayisi) {
-		super(emirNo, verilme, uygulama, emirVeren, uygulandiMi);
-		this.bolgeAdi = bolgeAdi;
-		this.temizlikTuru = temizlikTuru;
-		this.kisiSayisi = kisiSayisi;
-	}
-	
-	private String turnTemizlikTuruString(){
-		switch(temizlikTuru){
-			case 1:
-				return "Mýntýka Temizliði";
-			case 2:
-				return "Kýþ Temizliði";
-			case 3: 
-				return "Peyzaj Faaliyeti";
-			default: 
-				return "Genel Temizlik";
-		}
-	}
-	
-	public void emriUygula(){
-		this.setUygulandiMi(true);
-		System.out.println(emirOzeti() + " uygulandý.");
-	}
-	
-	@Override
-	public String emirMetni() {
-		return "\nEmir No: " + (getEmirNo()) + "\nTürü: Temizlik\nTemizlik Bölgesi: " + bolgeAdi + "\nTemizlik Türü: " + turnTemizlikTuruString() + "(" + temizlikTuru + ")" + "\nKiþi Sayýsý: " + kisiSayisi + "\nVerilme Tarihi: " + getVerilme().tarihAl() + "\nUygulama Tarihi: " + getUygulama().tarihAl() + "\nEmir Veren Komutan: " + getEmirVeren().kimlikAl() +"\nUygulanma Durumu: " + (isUygulandiMi() == true ? "Uygulandý" : "Uygulanmadý");
-	}
-	@Override
-	public String emirOzeti() {
-		return "Emir No: "+ getEmirNo() + ", " + getEmirVeren().kimlikAl() + " tarafýndan verilen temizlik emri (" + bolgeAdi + " bölgesinde " + kisiSayisi + " kiþi ile " + turnTemizlikTuruString() + ")" + (isUygulandiMi() == true ? " +" : "");
 	}
 
-	
+	public int temizlikTuruAl() {
+		return temizlikTuru;
+	}
+
+	public void temizlikTuruBelirle(int temizlikTuru) {
+		this.temizlikTuru = temizlikTuru;
+	}
+
+	public int kisiSayisiAl() {
+		return kisiSayisi;
+	}
+
+	public void kisiSayisiBelirle(int kisiSayisi) {
+		this.kisiSayisi = kisiSayisi;
+	}
+
+	public TemizlikEmri() {
+		super();
+		this.bolgeAdi = null;
+		this.temizlikTuru = 0;
+		this.kisiSayisi = 0;
+	}
+
+	public TemizlikEmri(int emirNo, Tarih verilmeTarihi, Tarih uygulamaTarihi, Komutan emirVerenKomutan, boolean uygulamaDurumu,
+			String bolgeAdi, int temizlikTuru, int kisiSayisi) {
+		super(emirNo, verilmeTarihi, uygulamaTarihi, emirVerenKomutan, uygulamaDurumu);
+		this.bolgeAdi = bolgeAdi;
+		this.temizlikTuru = temizlikTuru;
+		this.kisiSayisi = kisiSayisi;
+	}
+
+	private String temizlikTuruString() {
+		switch (temizlikTuru) {
+		case 1:
+			return "Mýntýka Temizliði";
+		case 2:
+			return "Kýþ Temizliði";
+		case 3:
+			return "Peyzaj Faaliyeti";
+		default:
+			return "Genel Temizlik";
+		}
+	}
+
+	public void emriUygula() {
+		this.uygulamaDurumuBelirle(true);
+		System.out.println(emirOzeti() + " uygulandý.");
+	}
+
+	@Override
+	public String emirMetni() {
+		return "\nEmir No: " + (emirNoAl()) + "\nTürü: Temizlik\nTemizlik Bölgesi: " + bolgeAdi + "\nTemizlik Türü: "
+				+ temizlikTuruString() + "(" + temizlikTuru + ")" + "\nKiþi Sayýsý: " + kisiSayisi
+				+ "\nVerilme Tarihi: " + verilmeTarihiAl().tarihAl() + "\nUygulama Tarihi: "
+				+ uygulamaTarihiAl().tarihAl() + "\nEmir Veren Komutan: " + emirVerenKomutanAl().kimlikAl()
+				+ "\nUygulanma Durumu: " + (uygulamaDurumuAl() == true ? "Uygulandý" : "Uygulanmadý");
+	}
+
+	@Override
+	public String emirOzeti() {
+		return "Emir No: " + emirNoAl() + ", " + emirVerenKomutanAl().kimlikAl() + " tarafýndan verilen temizlik emri ("
+				+ bolgeAdi + " bölgesinde " + kisiSayisi + " kiþi ile " + temizlikTuruString() + ")"
+				+ (uygulamaDurumuAl() == true ? " (+)" : "");
+	}
 
 }
