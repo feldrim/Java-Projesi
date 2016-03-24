@@ -11,7 +11,7 @@ public class KomutanA extends Komutan {
 
 	@Override
 	public String kimlikAl() {
-		return rutbelAl() + " " + adAl() + " " + soyadAl() + " (" + apoletNumarasıAl() + ") (A)";
+		return rutbeAl() + " " + adAl() + " " + soyadAl() + " (" + apoletNumarasıAl() + ") (A)";
 	}
 
 }

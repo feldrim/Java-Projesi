@@ -29,7 +29,7 @@ public abstract class Komutan {
 		this.soyad = soyad;
 	}
 
-	public String rutbelAl() {
+	public String rutbeAl() {
 		return (rutbe == null ? "" : rutbe);
 	}
 

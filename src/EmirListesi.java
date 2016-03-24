@@ -98,25 +98,25 @@ public class EmirListesi {
 
 			switch (secim) {
 			case 0:
-				sonEmriTekrarla(1, 1);
+				emirTekrarla(1, 1);
 				gecerliSecim = true;
 				break;
 			case 1:
 				System.out.println("Tekrar sayısı:");
 				tekrar = sc.nextInt();
-				sonEmriTekrarla(tekrar, 1);
+				emirTekrarla(tekrar, 1);
 				gecerliSecim = true;
 				break;
 			case 2:
 				System.out.println("Tekrar sayısı:");
 				tekrar = sc.nextInt();
-				sonEmriTekrarla(tekrar, 7);
+				emirTekrarla(tekrar, 7);
 				gecerliSecim = true;
 				break;
 			case 3:
 				System.out.println("Tekrar sayısı:");
 				tekrar = sc.nextInt();
-				sonEmriTekrarla(tekrar, 30);
+				emirTekrarla(tekrar, 30);
 				gecerliSecim = true;
 				break;
 			default:
@@ -160,7 +160,7 @@ public class EmirListesi {
 		}
 	}
 
-	public void sonEmriTekrarla(int tekrar, int periyot) {
+	public void emirTekrarla(int tekrar, int periyot) {
 		if(tekrar > 5){
 			System.out.println("En fazla 5 kez tekrar edebilirsiniz. Emriniz 5 tekrar olarak alınmıştır.");
 			tekrar = 5;

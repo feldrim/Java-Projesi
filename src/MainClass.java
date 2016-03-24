@@ -41,7 +41,7 @@ public class MainClass {
 					"\n          <Emir Kayýt Programý>               <" + bugun.tarihAl() + ">\n" 
 					+ "\n1. Emir Ekle"
 					+ "\n2. Emir Listele" 
-					+ "\n3. Emir Sil" 
+					+ "\n3. Emir Sil" //Debug için geçerli, sonra yalnýz son yazýlan emri silme þeklinde düzeltilecek
 					+ "\n4. Komutan Ekle" 
 					+ "\n5. Komutan Listele"
 					+ "\n6. Komutan Sil" 

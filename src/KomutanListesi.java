@@ -178,7 +178,12 @@ public class KomutanListesi {
 						temp = new KomutanB();
 						break;
 					}
-					temp = komutanListesi.get(i);
+					
+					temp.apoletNumarasýBelirle(komutanListesi.get(i).apoletNumarasýAl());
+					temp.rutbeBelirle(komutanListesi.get(i).rutbeAl());
+					temp.adBelirle(komutanListesi.get(i).adAl()); 
+					temp.soyadBelirle(komutanListesi.get(i).soyadAl());
+					
 					komutanListesi.insertElementAt(temp, i);
 					komutanListesi.remove(i + 1);
 					System.out.println("Apolet numarasý güncellendi. Yeni bilgi.\n" + komutanListesi.get(i).kimlikAl());
