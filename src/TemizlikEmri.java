@@ -30,7 +30,7 @@ public class TemizlikEmri extends Emir {
 
 	public TemizlikEmri() {
 		super();
-		this.bolgeAdi = null;
+		this.bolgeAdi = "";
 		this.temizlikTuru = 0;
 		this.kisiSayisi = 0;
 	}
