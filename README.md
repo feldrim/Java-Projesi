@@ -1,5 +1,10 @@
 # Java-Projesi
-##Java ve NYP dersi projesi
+
+##Mimari
+
+![UML Diyagramı](https://github.com/feldrim/Java-Projesi/blob/Proje/JavaProje.bmp)
+
+##İsterler
 
 - [X] Her bir emir 1'den başlayan sıra numarasına sahip olacaktır. Emir numaraları verilme sırasına göredir.
 - [X] Emir veren komutanın apolet numarası, emrin verildiği tarih ve emrin uygulanacağı tarih tutulmaktadır.
