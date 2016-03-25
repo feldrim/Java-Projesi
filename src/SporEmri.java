@@ -21,7 +21,7 @@ public class SporEmri extends Emir {
 
 	public SporEmri() {
 		super();
-		this.hareketTuru = null;
+		this.hareketTuru = "";
 		this.tekrarSayisi = 0;
 	}
 

@@ -4,11 +4,10 @@ import java.util.Scanner;
  * Java Uygulama Projesi
  * Zafer Balkan
  * 
+ * Ýsterler:
+ * 1. Komutan A ve Komutan B'nin kýsýtlarý henüz yazýlmadý.
  * 
  * Sorunlar:
- * 1. Emir tekrarý yapýldýðýnda ekrana emirleri doðru numaralarýyla yazdýrýyor. 
- * Ancak emirleri listelediðimizde yeni emirlerin hepsitekrarlanan son emrin numarasýný almýþ olarak görüntüleniyor.
- * 2. Bilgi güncelle menüsünde komutanýn türü deðiþmiyor.
  * 
  * 
  * Geliþtirmeler:
@@ -82,7 +81,7 @@ public class MainClass {
 				break;
 			case 9:
 				emirListesi.gunSonu(bugun);
-				bugun = bugun.gunSonra(1); // emirListesi'nin içine alsak mý?
+				bugun = bugun.gunSonra(1);
 				break;
 
 			default:
