@@ -2,7 +2,7 @@
 
 ##Mimari
 
-![UML Diyagramı](https://github.com/feldrim/Java-Projesi/blob/Proje/JavaProje.bmp)
+![UML Diyagramı](https://github.com/feldrim/Java-Projesi/blob/Proje/Class Diagram.jpg)
 
 ##İsterler
 
