@@ -13,6 +13,7 @@ public class EmirListesi {
 	private Scanner sc = new Scanner(System.in);
 	private Komutan emirVeren;
 	private Emir temp;
+	private int emirTuru;
 
 	public EmirListesi() {
 	}
@@ -41,6 +42,7 @@ public class EmirListesi {
 
 		System.out.println("1. Temizlik Emri\n2. Spor Emri");
 		int secim = sc.nextInt();
+		
 
 		boolean gecerliSecim = false;
 		do {
@@ -73,6 +75,8 @@ public class EmirListesi {
 				gecerliSecim = false;
 			}
 		} while (!gecerliSecim);
+		
+		emirTuru = secim;
 
 		Tarih uygulamaTarihi = new Tarih();
 
@@ -98,7 +102,7 @@ public class EmirListesi {
 
 			switch (secim) {
 			case 0:
-				emirTekrarla(1, 1);
+				emirTekrarla(1, 0);
 				gecerliSecim = true;
 				break;
 			case 1:
@@ -135,7 +139,7 @@ public class EmirListesi {
 		} else {
 			System.out.println("Kayýtlý emirler: (" + emirListesi.size() + "/" + LIMIT + ")");
 			for (int i = 0; i < emirListesi.size(); i++) {
-				System.out.println("* " + emirListesi.get(i).emirMetni());
+				System.out.println(emirListesi.get(i).emirMetni());
 			}
 		}
 	}
@@ -165,28 +169,38 @@ public class EmirListesi {
 			System.out.println("En fazla 5 kez tekrar edebilirsiniz. Emriniz 5 tekrar olarak alýnmýþtýr.");
 			tekrar = 5;
 		}
-		
 		emirListesi.add(temp);
 		
-		System.out.println("Emir Kaydedildi:\n" + emirListesi.lastElement().emirMetni());
-
-		for (int i = 1; i < tekrar; i++) {
-			/**
-			 * 1. Son eklenen emri kopyala
-			 * 2. Son eklenen emrin (artýk kendisi), uygulama tarihini belirlenen periyot kadar ilerlet
-			 *  ve son emrin uygulama tarihine ata
-			 * 3. Emir numarasýný bir arttýrarak ata.
-			 * */
-			emirListesi.addElement(emirListesi.lastElement());
+		System.out.println(emirListesi.lastElement().emirMetni());
+		
+		for(int i = 1 ; i < tekrar; i++){
 			
-			emirListesi.lastElement().uygulamaTarihiBelirle(emirListesi.lastElement().uygulamaTarihiAl().gunSonra(periyot));
-			
-			emirListesi.lastElement().emirNoBelirle(emirListesi.lastElement().emirNoAl() + 1);
+			if(emirTuru == 1){
+				emirListesi.add(new TemizlikEmri());
+				((TemizlikEmri)emirListesi.lastElement()).emirNoBelirle(emirListesi.get(emirListesi.size() - 2).emirNoAl() + 1);
+				((TemizlikEmri)emirListesi.lastElement()).verilmeTarihiBelirle(emirListesi.get(emirListesi.size() - 2).verilmeTarihiAl());
+				((TemizlikEmri)emirListesi.lastElement()).uygulamaTarihiBelirle(emirListesi.get(emirListesi.size() - 2).uygulamaTarihiAl().gunSonra(periyot));
+				((TemizlikEmri)emirListesi.lastElement()).emirVerenKomutanBelirle(emirListesi.get(emirListesi.size() - 2).emirVerenKomutanAl());
+				((TemizlikEmri)emirListesi.lastElement()).uygulamaDurumuBelirle(emirListesi.get(emirListesi.size() - 2).uygulamaDurumuAl());
+				((TemizlikEmri)emirListesi.lastElement()).bolgeAdiBelirle( ( (TemizlikEmri)emirListesi.get(emirListesi.size() - 2)).bolgeAdiAl());
+				((TemizlikEmri)emirListesi.lastElement()).temizlikTuruBelirle( ( (TemizlikEmri)emirListesi.get(emirListesi.size() - 2)).temizlikTuruAl());
+				((TemizlikEmri)emirListesi.lastElement()).kisiSayisiBelirle( ( (TemizlikEmri)emirListesi.get(emirListesi.size() - 2)).kisiSayisiAl());
+				
+			} else {
+				emirListesi.add(new SporEmri());
+				((SporEmri)emirListesi.lastElement()).emirNoBelirle(emirListesi.get(emirListesi.size() - 2).emirNoAl() + 1);
+				((SporEmri)emirListesi.lastElement()).verilmeTarihiBelirle(emirListesi.get(emirListesi.size() - 2).verilmeTarihiAl());
+				((SporEmri)emirListesi.lastElement()).uygulamaTarihiBelirle(emirListesi.get(emirListesi.size() - 2).uygulamaTarihiAl().gunSonra(periyot));
+				((SporEmri)emirListesi.lastElement()).emirVerenKomutanBelirle(emirListesi.get(emirListesi.size() - 2).emirVerenKomutanAl());
+				((SporEmri)emirListesi.lastElement()).uygulamaDurumuBelirle(emirListesi.get(emirListesi.size() - 2).uygulamaDurumuAl());
+				((SporEmri)emirListesi.lastElement()).hareketTuruBelirle( ( (SporEmri)emirListesi.get(emirListesi.size() - 2)).hareketTuruAl());
+				((SporEmri)emirListesi.lastElement()).tekrarSayisiBelirle( ( (SporEmri)emirListesi.get(emirListesi.size() - 2)).tekrarSayisiAl());
+			}
 			
 			System.out.println(emirListesi.lastElement().emirMetni());
 		}
-		
-		System.out.println(tekrar + " adet emir oluþturuldu.");
+
+		System.out.println(tekrar + " adet emir oluþturuldu:");
 	}
 
 	public void gunSonu(Tarih bugun) {
@@ -210,6 +224,7 @@ public class EmirListesi {
 			}
 
 		}
+		
 		System.out.println("\n" + bugun.tarihAl() + " tarihinde " + bugunVerilenEmirSayisi + " emir verilmiþ, "
 				+ bugunTamamlananEmirSayisi + " emir tamamlanmýþtýr.");
 	}
