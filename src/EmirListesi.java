@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -8,12 +9,14 @@ public class EmirListesi {
 	 */
 
 	Vector<Emir> emirListesi = new Vector<Emir>();
+	Vector<Integer> aTipiKomutanEmirleri = new Vector<Integer>(); //günsonu alýnýrken boþaltýlacak
 	public static final int LIMIT = 100;
 
 	private Scanner sc = new Scanner(System.in);
 	private Komutan emirVeren;
 	private Emir temp;
 	private int emirTuru;
+
 
 	public EmirListesi() {
 	}
@@ -37,12 +40,53 @@ public class EmirListesi {
 		} while (!komutanListesi.komutanMevcutMu(apolet));
 
 		emirVeren = komutanListesi.komutanAl(apolet);
+		
+		System.out.println("Emri veren: " + emirVeren.kimlikAl() + "\n");
+		
+		if(emirVeren.komutanTuruAl().equals("KomutanA")){
+			
+			int bireyselSayac = 0;//Test verilerini saymadýðýndan sorun oluyor. Dinamik yapmak lazým.
+			aTipiKomutanEmirleri.add(emirVeren.apoletNumarasýAl());
+			
+			for(int i = 0; i < aTipiKomutanEmirleri.size(); i++){
+				if(aTipiKomutanEmirleri.contains(emirVeren.apoletNumarasýAl())){
+					bireyselSayac++;
+				}
+			}
+			
+			if(bireyselSayac == 3){
+				System.out.println("A Tipi bir komutan ayný gün içinde 2'den fazla emir veremez.");
+				aTipiKomutanEmirleri.remove(aTipiKomutanEmirleri.size() - 1);
+				return;
+			}
+			
+			if(aTipiKomutanEmirleri.size() == 6){
+				System.out.println("A Tipi komutanlar ayný gün içinde toplamda 5'ten fazla emir veremezler.");
+				aTipiKomutanEmirleri.remove(aTipiKomutanEmirleri.size() - 1);
+				return;
+			}
+		
+			System.out.println("Bugün " + emirVeren.kimlikAl() + " tarafýndan verilen " + bireyselSayac + ". emir.");
+		}
 
 		System.out.println("Emir No: " + (emirListesi.size() + 1));
 
 		System.out.println("1. Temizlik Emri\n2. Spor Emri");
 		int secim = sc.nextInt();
 		
+		if(emirVeren.komutanTuruAl().equals("KomutanB")) {			
+			for(int i = emirListesi.size() - 1 ; i >= 0 ; i--){
+				if(emirListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl() == apolet){
+					if((emirListesi.get(i).getClass().getName() == "TemizlikEmri" && secim == 1) ||
+					   (emirListesi.get(i).getClass().getName() == "SporEmri" && secim == 2)){
+						
+						System.out.println("Bir önceki emrinizden farklý bir türde bir emir vermelisiniz.");
+						System.out.println("Bir önceki emriniz:\n" + emirListesi.get(i).emirOzeti());
+						return;
+					}
+				}
+			}
+		}
 
 		boolean gecerliSecim = false;
 		do {
@@ -138,10 +182,12 @@ public class EmirListesi {
 			System.out.println("Emir listesi boþ");
 		} else {
 			System.out.println("Kayýtlý emirler: (" + emirListesi.size() + "/" + LIMIT + ")");
-			for (int i = 0; i < emirListesi.size(); i++) {
-				System.out.println(emirListesi.get(i).emirMetni());
+			
+			
+			Iterator<Emir> it = emirListesi.iterator();
+			while (it.hasNext())
+				System.out.println("* " + it.next().emirOzeti());
 			}
-		}
 	}
 
 	public void emirAra(int emirNo) {
@@ -171,8 +217,6 @@ public class EmirListesi {
 		}
 		emirListesi.add(temp);
 		
-		System.out.println(emirListesi.lastElement().emirMetni());
-		
 		for(int i = 1 ; i < tekrar; i++){
 			
 			if(emirTuru == 1){
@@ -197,14 +241,27 @@ public class EmirListesi {
 				((SporEmri)emirListesi.lastElement()).tekrarSayisiBelirle( ( (SporEmri)emirListesi.get(emirListesi.size() - 2)).tekrarSayisiAl());
 			}
 			
-			System.out.println(emirListesi.lastElement().emirMetni());
 		}
 
-		System.out.println(tekrar + " adet emir oluþturuldu:");
+		switch(periyot){
+		case 0:
+			System.out.println(emirListesi.lastElement().emirOzeti() + " oluþturuldu");
+			break;
+		case 1:
+			System.out.println(emirListesi.lastElement().emirOzeti() + ",\n günlük olarak " + tekrar + " tekrar olacak þekilde oluþturuldu.");
+			break;
+		case 7:
+			System.out.println(emirListesi.lastElement().emirOzeti() + ",\nhaftada bir kez " + tekrar + " tekrar olacak þekilde oluþturuldu.");
+			break;
+		case 30:
+			System.out.println(emirListesi.lastElement().emirOzeti() + ",\nayda bir kez " + tekrar + " tekrar olacak þekilde oluþturuldu.");
+			break;
+		}
 	}
 
 	public void gunSonu(Tarih bugun) {
-
+		
+		aTipiKomutanEmirleri.clear();
 		int bugunVerilenEmirSayisi = 0;
 		int bugunTamamlananEmirSayisi = 0;
 		System.out.println("Gün sonu alýnýyor.");
@@ -235,13 +292,20 @@ public class EmirListesi {
 		Emir[] testListesi = new Emir[4];
 		testListesi[0] = new TemizlikEmri(1, bugun, bugun, komutanListesi.komutanAl(3001), false, "bahçe", 1, 5);
 		testListesi[1] = new SporEmri(2, bugun, bugun, komutanListesi.komutanAl(3002), false, "Mekik", 50);
-		testListesi[2] = new TemizlikEmri(3, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3003), false, "avlu", 1,
+		testListesi[2] = new TemizlikEmri(3, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3004), false, "avlu", 1,
 				7);
-		testListesi[3] = new SporEmri(4, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3004), false, "Þýnav", 50);
+		testListesi[3] = new SporEmri(4, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3005), false, "Þýnav", 50);
 
 		for (int i = 0; i < testListesi.length; i++) {
 			emirListesi.add(testListesi[i]);
+			if(testListesi[i].emirVerenKomutanAl().getClass().getName() == "KomutanA"){
+				aTipiKomutanEmirleri.add(testListesi[i].emirVerenKomutanAl().apoletNumarasýAl());
+			}
 		}
+		
+		
+		
+		
 		System.out.println("Test verisi üretildi.");
 
 	}
