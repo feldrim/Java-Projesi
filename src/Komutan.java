@@ -1,9 +1,10 @@
+import java.util.Vector;
 
 public abstract class Komutan {
 	private int apoletNumarası;
 	private String ad;
 	private String soyad;
-	private String rutbe; // sonra int olarak ayarlanıp switch case ile seçsek?
+	private String rutbe;
 
 	public int apoletNumarasıAl() {
 		return apoletNumarası;
@@ -36,6 +37,10 @@ public abstract class Komutan {
 	public void rutbeBelirle(String rutbe) {
 		this.rutbe = rutbe;
 	}
+	
+	public String komutanTuruAl(){
+		return getClass().getName();
+	}
 
 	public Komutan() {
 		this.apoletNumarası = 0000;
@@ -51,6 +56,8 @@ public abstract class Komutan {
 		this.rutbe = rutbe;
 	}
 
-	public abstract String kimlikAl();
+	public String kimlikAl(){
+		return rutbeAl() + " " + adAl() + " " + soyadAl() + " (" + apoletNumarasıAl() + ") (" + komutanTuruAl() + ")";
+	}
 
 }
