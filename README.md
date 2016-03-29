@@ -13,7 +13,7 @@ Projenin Sınıf diyagramı Visual Paradigm ile reverse edilerek elde edilmişti
 - [X] Emrin uygulama tarihi, veriliş tarihinden en fazla 10 gün sonra olabilir, geride olma şansı yoktur.
 - [X] Emir veren komutanın sistemde kayıtlı olup olmadığı kontrol edilecektir.
 - [X] 2 tür emir vardır: TemizlikEmri, SporEmri. TemizlikEmri bölge adı, temizlik türü (mıntıka, kış temizliği, peyzaj) ve katılacak kişi sayısını; SporEmri hareket türü ve tekrar sayısını içerecektir.
-- [ ] Sistemde 2 komutan türü vardır: A ve B. Bir A bir gün içerisinde en fazla 2, tüm A'lar bir günde en fazla 5 emir verebilir. B'nin verdiği emir, bir önceki ile aynı tür olamaz.
+- [X] Sistemde 2 komutan türü vardır: A ve B. Bir A bir gün içerisinde en fazla 2, tüm A'lar bir günde en fazla 5 emir verebilir. B'nin verdiği emir, bir önceki ile aynı tür olamaz.
 - [X] Kullanıcıdan asgari olarak günün tarihi istenecek, komutan ekleme, emir ekleme ve gün sonu raporu alma seçenekleri sunulacaktır.
 - [X] Bugünün emirlerinin listelenmesi, emir numarası girilen emirlerin uygulanması da sunulacaktır. Uygulama, emrin özelliklerini ekrana UYGULANDI ibaresi ile birlikte yazdırmak biçiminde gerçekleşecektir.
 - [X] Gün sonu ile o gün tamamlanan emirler, o gün verilen emirler, o gün verilenlerden tamamlananların bilgisi verilecek ve sonraki güne geçilecektir.
