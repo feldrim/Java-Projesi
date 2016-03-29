@@ -194,19 +194,16 @@ public class KomutanListesi {
 		}
 	}
 
-	public void testVerisiUret() {
+	public void testVerisiUret() {		
+		
+		Vector<Komutan> testListesi = new Vector<Komutan>();
+		testListesi.add( new KomutanA(3001, "Zafer", "Balkan", "Ütðm.") );
+		testListesi.add( new KomutanA(3002, "Sercan", "Gülburun", "Ütðm.") );
+		testListesi.add( new KomutanA(3003, "Ý. Süheyl", "Erdem", "Ütðm.") );
+		testListesi.add( new KomutanB(3004, "Serkan", "Hasdemir", "Ütðm.") );
+		testListesi.add( new KomutanB(3005, "Murat", "Gümüþ", "Ütðm."));
+		testListesi.add( new KomutanB(3006, "Harun", "Artýn", "Ütðm.") );
+		testListesi.add( new KomutanB(3007, "Osman", "Dinç", "Ütðm.") );
 
-		Komutan[] testListesi = new Komutan[7];
-		testListesi[0] = new KomutanA(3001, "Zafer", "Balkan", "Ütðm.");
-		testListesi[1] = new KomutanA(3002, "Sercan", "Gülburun", "Ütðm.");
-		testListesi[2] = new KomutanA(3003, "Ý. Süheyl", "Erdem", "Ütðm.");
-		testListesi[3] = new KomutanB(3004, "Serkan", "Hasdemir", "Ütðm.");
-		testListesi[4] = new KomutanB(3005, "Murat", "Gümüþ", "Ütðm.");
-		testListesi[5] = new KomutanB(3006, "Harun", "Artýn", "Ütðm.");
-		testListesi[6] = new KomutanB(3007, "Osman", "Dinç", "Ütðm.");
-
-		for (int i = 0; i < testListesi.length; i++) {
-			komutanListesi.add(testListesi[i]);
-		}
 	}
 }

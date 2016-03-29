@@ -61,6 +61,10 @@ public abstract class Emir {
 		this.emirVerenKomutan = emirVerenKomutan;
 		this.uygulamaDurumu = uygulamaDurumu;
 	}
+	
+	public String emirTuruAl(){
+		return getClass().getName();
+	}
 
 	public abstract void emriUygula();
 
