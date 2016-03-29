@@ -3,10 +3,6 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class EmirListesi {
-	/*
-	 * emirAra() main'e eklenecek emirTekrarla() yeniden yazýlacak KomutanA ve
-	 * KomutanB kýsýtlarý emirEkle()'ye eklenecek
-	 */
 
 	Vector<Emir> emirListesi = new Vector<Emir>();
 	Vector<Integer> aTipiKomutanEmirleri = new Vector<Integer>(); //günsonu alýnýrken boþaltýlacak
@@ -15,8 +11,6 @@ public class EmirListesi {
 	private Scanner sc = new Scanner(System.in);
 	private Komutan emirVeren;
 	private Emir temp;
-	private int emirTuru;
-
 
 	public EmirListesi() {
 	}
@@ -43,11 +37,10 @@ public class EmirListesi {
 		
 		System.out.println("Emri veren: " + emirVeren.kimlikAl() + "\n");
 		
-		if(emirVeren.komutanTuruAl().equals("KomutanA")){
+		if(emirVeren.komutanTuruAl().equals("KomutanA")){//KomutanA kýsýtlarý
 			
-			int bireyselSayac = 0;//Test verilerini saymadýðýndan sorun oluyor. Dinamik yapmak lazým.
-			aTipiKomutanEmirleri.add(emirVeren.apoletNumarasýAl());
-			
+			int bireyselSayac = 0;
+					
 			for(int i = 0; i < aTipiKomutanEmirleri.size(); i++){
 				if(aTipiKomutanEmirleri.contains(emirVeren.apoletNumarasýAl())){
 					bireyselSayac++;
@@ -67,6 +60,8 @@ public class EmirListesi {
 			}
 		
 			System.out.println("Bugün " + emirVeren.kimlikAl() + " tarafýndan verilen " + bireyselSayac + ". emir.");
+			
+			aTipiKomutanEmirleri.add(emirVeren.apoletNumarasýAl());
 		}
 
 		System.out.println("Emir No: " + (emirListesi.size() + 1));
@@ -74,11 +69,11 @@ public class EmirListesi {
 		System.out.println("1. Temizlik Emri\n2. Spor Emri");
 		int secim = sc.nextInt();
 		
-		if(emirVeren.komutanTuruAl().equals("KomutanB")) {			
+		if(emirVeren.komutanTuruAl().equals("KomutanB")) {	//KomutanB kýsýtý		
 			for(int i = emirListesi.size() - 1 ; i >= 0 ; i--){
 				if(emirListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl() == apolet){
-					if((emirListesi.get(i).getClass().getName() == "TemizlikEmri" && secim == 1) ||
-					   (emirListesi.get(i).getClass().getName() == "SporEmri" && secim == 2)){
+					if((emirListesi.get(i).emirTuruAl() == "TemizlikEmri" && secim == 1) ||
+					   (emirListesi.get(i).emirTuruAl() == "SporEmri" && secim == 2)){
 						
 						System.out.println("Bir önceki emrinizden farklý bir türde bir emir vermelisiniz.");
 						System.out.println("Bir önceki emriniz:\n" + emirListesi.get(i).emirOzeti());
@@ -108,8 +103,19 @@ public class EmirListesi {
 			case 2:
 				System.out.println("Açýklama: ");
 				String hareketTuru = sc.next();
-				System.out.println("Tekrar sayýsý: ");
-				int tekrarSayisi = sc.nextInt();
+				
+				int tekrarSayisi;
+				do{
+					System.out.println("Tekrar sayýsý: ");
+					tekrarSayisi = sc.nextInt();
+					if(tekrarSayisi >= 100)
+						System.out.println("Tekrar sayýsý 100'den fazla olamaz.");
+				}while(tekrarSayisi >= 100);
+				
+				
+				
+				
+				
 				temp = new SporEmri((emirListesi.size() + 1), bugun, null, emirVeren, false, hareketTuru, tekrarSayisi);
 				gecerliSecim = true;
 				break;
@@ -120,8 +126,6 @@ public class EmirListesi {
 			}
 		} while (!gecerliSecim);
 		
-		emirTuru = secim;
-
 		Tarih uygulamaTarihi = new Tarih();
 
 		do {
@@ -138,8 +142,11 @@ public class EmirListesi {
 		gecerliSecim = false;
 
 		do {
-			System.out.println("\n\nEmri tekrarlamak istiyor musunuz?" + "\n0.  Hayýr" + "\n1. Günlük" + "\n2. Haftalýk"
-					+ "\n3. Aylýk");
+			System.out.println("\n\nEmri tekrarlamak istiyor musunuz?" 
+								+ "\n0.  Hayýr" 
+								+ "\n1. Günlük" 
+								+ "\n2. Haftalýk"
+								+ "\n3. Aylýk");
 
 			secim = sc.nextInt();
 			int tekrar;
@@ -219,7 +226,7 @@ public class EmirListesi {
 		
 		for(int i = 1 ; i < tekrar; i++){
 			
-			if(emirTuru == 1){
+			if(temp.emirTuruAl() == "TemizlikEmri"){
 				emirListesi.add(new TemizlikEmri());
 				((TemizlikEmri)emirListesi.lastElement()).emirNoBelirle(emirListesi.get(emirListesi.size() - 2).emirNoAl() + 1);
 				((TemizlikEmri)emirListesi.lastElement()).verilmeTarihiBelirle(emirListesi.get(emirListesi.size() - 2).verilmeTarihiAl());
@@ -287,24 +294,28 @@ public class EmirListesi {
 	}
 
 	public void testVerisiUret(Tarih bugun, KomutanListesi komutanListesi) {
+		
 		komutanListesi.testVerisiUret();
-
-		Emir[] testListesi = new Emir[4];
-		testListesi[0] = new TemizlikEmri(1, bugun, bugun, komutanListesi.komutanAl(3001), false, "bahçe", 1, 5);
-		testListesi[1] = new SporEmri(2, bugun, bugun, komutanListesi.komutanAl(3002), false, "Mekik", 50);
-		testListesi[2] = new TemizlikEmri(3, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3004), false, "avlu", 1,
-				7);
-		testListesi[3] = new SporEmri(4, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3005), false, "Þýnav", 50);
-
-		for (int i = 0; i < testListesi.length; i++) {
-			emirListesi.add(testListesi[i]);
-			if(testListesi[i].emirVerenKomutanAl().getClass().getName() == "KomutanA"){
-				aTipiKomutanEmirleri.add(testListesi[i].emirVerenKomutanAl().apoletNumarasýAl());
+		
+		Vector<Emir> testListesi = new Vector<Emir>();
+		testListesi.add( new TemizlikEmri(1, bugun, bugun, komutanListesi.komutanAl(3001), false, "bahçe", 1, 5) );
+		testListesi.add( new SporEmri(2, bugun, bugun, komutanListesi.komutanAl(3002), false, "Mekik", 50) );
+		testListesi.add( new TemizlikEmri(3, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3004), false, "avlu", 1,7) );
+		testListesi.add( new SporEmri(4, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3005), false, "Þýnav", 50) );
+		testListesi.add( new TemizlikEmri(5, bugun, bugun.gunSonra(2), komutanListesi.komutanAl(3004), false, "avlu", 1,7) );
+		testListesi.add( new TemizlikEmri(6, bugun, bugun.gunSonra(3), komutanListesi.komutanAl(3006), false, "yol", 1,7) );
+			
+		Iterator<Emir> it = testListesi.iterator();
+		while(it.hasNext()){
+			if ( ( (TemizlikEmri)it).emirVerenKomutanAl().komutanTuruAl() == "KomutanA"){
+				
+				aTipiKomutanEmirleri.add(( (TemizlikEmri)it).emirVerenKomutanAl().apoletNumarasýAl());
+				
+			} else if ( ( (SporEmri)it).emirVerenKomutanAl().komutanTuruAl() == "KomutanA"){
+				
+				aTipiKomutanEmirleri.add(( (SporEmri)it).emirVerenKomutanAl().apoletNumarasýAl());
 			}
 		}
-		
-		
-		
 		
 		System.out.println("Test verisi üretildi.");
 
