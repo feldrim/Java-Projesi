@@ -1,5 +1,11 @@
 # Java-Projesi
-##Java ve NYP dersi projesi
+
+##Mimari
+Projenin Sınıf diyagramı Visual Paradigm ile reverse edilerek elde edilmiştir. Büyük boyutu için [buraya](https://raw.githubusercontent.com/feldrim/Java-Projesi/Proje/Class%20Diagram.jpg) tıklayın.
+
+![UML Diyagramı](https://github.com/feldrim/Java-Projesi/blob/Proje/Class Diagram.jpg)
+
+##İsterler
 
 - [X] Her bir emir 1'den başlayan sıra numarasına sahip olacaktır. Emir numaraları verilme sırasına göredir.
 - [X] Emir veren komutanın apolet numarası, emrin verildiği tarih ve emrin uygulanacağı tarih tutulmaktadır.
