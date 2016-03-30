@@ -72,8 +72,11 @@ public class TemizlikEmri extends Emir {
 
 	@Override
 	public String emirOzeti() {
-		return "Emir No: " + emirNoAl() + ", " + emirVerenKomutanAl().kimlikAl() + " tarafýndan verilen temizlik emri ("
-				+ bolgeAdi + " bölgesinde " + kisiSayisi + " kiþi ile " + temizlikTuruString() + ")"
+		return "Emir No: " + emirNoAl() + ", " 
+				+ emirVerenKomutanAl().kimlikAl() + " tarafýndan verilen temizlik emri ("
+				+ bolgeAdi + " bölgesinde " 
+				+ kisiSayisi + " kiþi ile " 
+				+ temizlikTuruString() + ")"
 				+ (uygulamaDurumuAl() == true ? " (+)" : "");
 	}
 

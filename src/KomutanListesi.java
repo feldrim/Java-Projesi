@@ -204,6 +204,13 @@ public class KomutanListesi {
 		testListesi.add( new KomutanB(3005, "Murat", "Gümüþ", "Ütðm."));
 		testListesi.add( new KomutanB(3006, "Harun", "Artýn", "Ütðm.") );
 		testListesi.add( new KomutanB(3007, "Osman", "Dinç", "Ütðm.") );
+		
+		for(int i = 0; i < testListesi.size(); i++){
+			System.out.println(testListesi.get(i).kimlikAl());	
+		}
+				
+		komutanListesi.addAll(testListesi);
+		System.out.println(testListesi.size() + " komutan eklendi.");
 
 	}
 }
