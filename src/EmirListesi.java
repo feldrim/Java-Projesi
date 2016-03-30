@@ -5,7 +5,7 @@ import java.util.Vector;
 public class EmirListesi {
 
 	Vector<Emir> emirListesi = new Vector<Emir>();
-	Vector<Integer> aTipiKomutanEmirleri = new Vector<Integer>(); //günsonu alýnýrken boþaltýlacak
+	Vector<Integer> emirVerenAtipiKomutanlar = new Vector<Integer>(); //günsonu alýnýrken boþaltýlacak
 	public static final int LIMIT = 100;
 
 	private Scanner sc = new Scanner(System.in);
@@ -41,27 +41,27 @@ public class EmirListesi {
 			
 			int bireyselSayac = 0;
 					
-			for(int i = 0; i < aTipiKomutanEmirleri.size(); i++){
-				if(aTipiKomutanEmirleri.contains(emirVeren.apoletNumarasýAl())){
+			for(int i = 0; i < emirVerenAtipiKomutanlar.size(); i++){
+				if(emirVerenAtipiKomutanlar.contains(emirVeren.apoletNumarasýAl())){
 					bireyselSayac++;
 				}
 			}
 			
 			if(bireyselSayac == 3){
 				System.out.println("A Tipi bir komutan ayný gün içinde 2'den fazla emir veremez.");
-				aTipiKomutanEmirleri.remove(aTipiKomutanEmirleri.size() - 1);
+				emirVerenAtipiKomutanlar.remove(emirVerenAtipiKomutanlar.size() - 1);
 				return;
 			}
 			
-			if(aTipiKomutanEmirleri.size() == 6){
+			if(emirVerenAtipiKomutanlar.size() == 6){
 				System.out.println("A Tipi komutanlar ayný gün içinde toplamda 5'ten fazla emir veremezler.");
-				aTipiKomutanEmirleri.remove(aTipiKomutanEmirleri.size() - 1);
+				emirVerenAtipiKomutanlar.remove(emirVerenAtipiKomutanlar.size() - 1);
 				return;
 			}
 		
 			System.out.println("Bugün " + emirVeren.kimlikAl() + " tarafýndan verilen " + bireyselSayac + ". emir.");
 			
-			aTipiKomutanEmirleri.add(emirVeren.apoletNumarasýAl());
+			emirVerenAtipiKomutanlar.add(emirVeren.apoletNumarasýAl());
 		}
 
 		System.out.println("Emir No: " + (emirListesi.size() + 1));
@@ -268,7 +268,7 @@ public class EmirListesi {
 
 	public void gunSonu(Tarih bugun) {
 		
-		aTipiKomutanEmirleri.clear();
+		emirVerenAtipiKomutanlar.clear();
 		int bugunVerilenEmirSayisi = 0;
 		int bugunTamamlananEmirSayisi = 0;
 		System.out.println("Gün sonu alýnýyor.");
@@ -295,28 +295,28 @@ public class EmirListesi {
 
 	public void testVerisiUret(Tarih bugun, KomutanListesi komutanListesi) {
 		
+		System.out.println("Test verisi oluþturuluyor...");
+		
 		komutanListesi.testVerisiUret();
 		
 		Vector<Emir> testListesi = new Vector<Emir>();
-		testListesi.add( new TemizlikEmri(1, bugun, bugun, komutanListesi.komutanAl(3001), false, "bahçe", 1, 5) );
+		testListesi.add( new TemizlikEmri(1, bugun, bugun, komutanListesi.komutanAl(3001), false, "bahçe", 1, 5) );		
 		testListesi.add( new SporEmri(2, bugun, bugun, komutanListesi.komutanAl(3002), false, "Mekik", 50) );
 		testListesi.add( new TemizlikEmri(3, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3004), false, "avlu", 1,7) );
 		testListesi.add( new SporEmri(4, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3005), false, "Þýnav", 50) );
 		testListesi.add( new TemizlikEmri(5, bugun, bugun.gunSonra(2), komutanListesi.komutanAl(3004), false, "avlu", 1,7) );
 		testListesi.add( new TemizlikEmri(6, bugun, bugun.gunSonra(3), komutanListesi.komutanAl(3006), false, "yol", 1,7) );
 			
-		Iterator<Emir> it = testListesi.iterator();
-		while(it.hasNext()){
-			if ( ( (TemizlikEmri)it).emirVerenKomutanAl().komutanTuruAl() == "KomutanA"){
-				
-				aTipiKomutanEmirleri.add(( (TemizlikEmri)it).emirVerenKomutanAl().apoletNumarasýAl());
-				
-			} else if ( ( (SporEmri)it).emirVerenKomutanAl().komutanTuruAl() == "KomutanA"){
-				
-				aTipiKomutanEmirleri.add(( (SporEmri)it).emirVerenKomutanAl().apoletNumarasýAl());
+		for(int i = 0 ; i < testListesi.size() ; i++ ){
+			System.out.println(testListesi.get(i).emirOzeti());
+			if(testListesi.get(i).emirVerenKomutanAl().komutanTuruAl() == "KomutanA" ){
+				emirVerenAtipiKomutanlar.add(testListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl());
 			}
 		}
 		
+		System.out.println(testListesi.size() + " adet emir oluþturuldu.");	
+		
+		emirListesi.addAll(testListesi);	
 		System.out.println("Test verisi üretildi.");
 
 	}
