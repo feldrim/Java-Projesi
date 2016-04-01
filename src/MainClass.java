@@ -14,16 +14,11 @@ import java.util.Scanner;
  * Geliþtirmeler:
  * 1. Exception yazýlacak. Öncelikle inputlar, ardýndan kýsýtlar.
  * 2. Emir arama, komutan arama metorlarý yazýldý, menüye eklenecek
- * 3. Komutan A ve B kýsýtlarýný statik yapmak yerine Komutan sýnýfý içine
- * bir emirVer() metodu yazýp KomutanA ve KomutanB tarafýndan override etsek, 
- * her biri kendi kontrolünü yapsa olur mu? (emirVer(), emirEkle()'yi çaðýracak,
- * apolet numarasý sorgusunu komutanListesi ya da emirListesi içinde yapmayý 
- * gerektirebilir)
- * 4. Emir Listele menüsü ayrýntýlandýrýlacak: Uygulanan, uygulanmayan,
+ * 3. Emir Listele menüsü ayrýntýlandýrýlacak: Uygulanan, uygulanmayan,
  * bugün uygulanacak, bugün verilen, x komutan tarafýndan verilen, tekrar eden emirler...
- * 5. Komutan Listesi ayrýntýlandýrýlacak: A tipi komutanlar, B tipi komutanlar,
+ * 4. Komutan Listesi ayrýntýlandýrýlacak: A tipi komutanlar, B tipi komutanlar,
  * bugün emir veren, hiç emir vermeyen...
- * 6. Tarih girmek gün, ay, yýl ve üç kez enter basýldýðýndan 6 aþamalý. Kýsaltabilir miyiz?
+ * 5. Tarih girmek gün, ay, yýl ve üç kez enter basýldýðýndan 6 aþamalý. Kýsaltabilir miyiz?
  */
 
 public class MainClass {

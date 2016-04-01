@@ -5,7 +5,7 @@ import java.util.Vector;
 public class EmirListesi {
 
 	Vector<Emir> emirListesi = new Vector<Emir>();
-	Vector<Integer> emirVerenAtipiKomutanlar = new Vector<Integer>(); //günsonu alýnýrken boþaltýlacak
+	Vector<Integer> emirVerenAtipiKomutanlar = new Vector<Integer>(); //KomutanListesi'ne atsak mý?
 	public static final int LIMIT = 100;
 
 	private Scanner sc = new Scanner(System.in);
@@ -37,51 +37,14 @@ public class EmirListesi {
 		
 		System.out.println("Emri veren: " + emirVeren.kimlikAl() + "\n");
 		
-		if(emirVeren.komutanTuruAl().equals("KomutanA")){//KomutanA kýsýtlarý
-			
-			int bireyselSayac = 0;
-					
-			for(int i = 0; i < emirVerenAtipiKomutanlar.size(); i++){
-				if(emirVerenAtipiKomutanlar.contains(emirVeren.apoletNumarasýAl())){
-					bireyselSayac++;
-				}
-			}
-			
-			if(bireyselSayac == 3){
-				System.out.println("A Tipi bir komutan ayný gün içinde 2'den fazla emir veremez.");
-				emirVerenAtipiKomutanlar.remove(emirVerenAtipiKomutanlar.size() - 1);
-				return;
-			}
-			
-			if(emirVerenAtipiKomutanlar.size() == 6){
-				System.out.println("A Tipi komutanlar ayný gün içinde toplamda 5'ten fazla emir veremezler.");
-				emirVerenAtipiKomutanlar.remove(emirVerenAtipiKomutanlar.size() - 1);
-				return;
-			}
-		
-			System.out.println("Bugün " + emirVeren.kimlikAl() + " tarafýndan verilen " + bireyselSayac + ". emir.");
-			
-			emirVerenAtipiKomutanlar.add(emirVeren.apoletNumarasýAl());
-		}
+		komutanKisitlariKontrolu(emirVeren); //KomutanA kýsýtlarý kontrolü
 
 		System.out.println("Emir No: " + (emirListesi.size() + 1));
 
 		System.out.println("1. Temizlik Emri\n2. Spor Emri");
 		int secim = sc.nextInt();
 		
-		if(emirVeren.komutanTuruAl().equals("KomutanB")) {	//KomutanB kýsýtý		
-			for(int i = emirListesi.size() - 1 ; i >= 0 ; i--){
-				if(emirListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl() == apolet){
-					if((emirListesi.get(i).emirTuruAl() == "TemizlikEmri" && secim == 1) ||
-					   (emirListesi.get(i).emirTuruAl() == "SporEmri" && secim == 2)){
-						
-						System.out.println("Bir önceki emrinizden farklý bir türde bir emir vermelisiniz.");
-						System.out.println("Bir önceki emriniz:\n" + emirListesi.get(i).emirOzeti());
-						return;
-					}
-				}
-			}
-		}
+		komutanKisitlariKontrolu(emirVeren); //KomutanB kýsýtlarý kontrolü
 
 		boolean gecerliSecim = false;
 		do {
@@ -318,6 +281,50 @@ public class EmirListesi {
 		
 		emirListesi.addAll(testListesi);	
 		System.out.println("Test verisi üretildi.");
+
+	}
+	
+	public void komutanKisitlariKontrolu(Komutan komutan){
+		
+			if(komutan.komutanTuruAl().equals("KomutanA")){
+			
+			int bireyselSayac = 0;
+					
+			for(int i = 0; i < emirVerenAtipiKomutanlar.size(); i++){
+				if(emirVerenAtipiKomutanlar.contains(komutan.apoletNumarasýAl())){
+					bireyselSayac++;
+				}
+			}
+			
+			if(bireyselSayac == 3){
+				System.out.println("A Tipi bir komutan ayný gün içinde 2'den fazla emir veremez.");
+				emirVerenAtipiKomutanlar.remove(emirVerenAtipiKomutanlar.size() - 1);
+				return;
+			}
+			
+			if(emirVerenAtipiKomutanlar.size() == 6){
+				System.out.println("A Tipi komutanlar ayný gün içinde toplamda 5'ten fazla emir veremezler.");
+				emirVerenAtipiKomutanlar.remove(emirVerenAtipiKomutanlar.size() - 1);
+				return;
+			}
+			
+			//Debug için aþaðýdakini çalýþtýrabiliriz.		
+			//System.out.println("Bugün " + komutan.kimlikAl() + " tarafýndan verilen " + bireyselSayac + ". emir.");
+			
+			emirVerenAtipiKomutanlar.add(komutan.apoletNumarasýAl());
+			
+		} else if(komutan.komutanTuruAl().equals("KomutanB")) {
+			
+			for(int i = emirListesi.size() - 1 ; i >= 0 ; i--){
+				if(emirListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl() == komutan.apoletNumarasýAl()){
+					if((emirListesi.get(i).emirTuruAl() == "TemizlikEmri") || (emirListesi.get(i).emirTuruAl() == "SporEmri")){
+						System.out.println("Bir önceki emrinizden farklý bir türde bir emir vermelisiniz.");
+						System.out.println("Bir önceki emriniz:\n" + emirListesi.get(i).emirOzeti());
+						return;
+					}
+				}
+			}
+		}
 
 	}
 }
