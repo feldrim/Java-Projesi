@@ -66,7 +66,10 @@ public abstract class Emir {
 		return getClass().getName();
 	}
 
-	public abstract void emriUygula();
+	public void emriUygula() {
+		this.uygulamaDurumuBelirle(true);
+		System.out.println(emirOzeti() + " uygulandý.");
+	}
 
 	public abstract String emirMetni();
 

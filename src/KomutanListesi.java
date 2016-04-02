@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.Vector;
 import java.util.Iterator;
+import java.util.Locale;
 
 public class KomutanListesi {
 	Vector<Komutan> komutanListesi = new Vector<Komutan>();
@@ -76,35 +77,113 @@ public class KomutanListesi {
 	}
 
 	public Komutan komutanAl(int apolet) {
-		Komutan temp = null;
-		for (int i = 0; i < komutanListesi.size(); i++) {
-			if (apolet == komutanListesi.get(i).apoletNumarasýAl()) {
-				temp = komutanListesi.get(i);
-				break;
-			} else {
-				temp = null;
+		
+		if(!komutanMevcutMu(apolet)){
+			System.out.println("Sistemde bu numarayla kayýtlý bir komutan yok.");
+			return null;
+		} else {
+			Komutan temp = null;
+			for (int i = 0; i < komutanListesi.size(); i++) {
+				if (apolet == komutanListesi.get(i).apoletNumarasýAl()) {
+					temp = komutanListesi.get(i);
+					break;
+				} else {
+					temp = null;
+				}
 			}
-		}
-		return temp;
-	}
-
-	public void komutanAra(int apolet) {
-		if (!komutanMevcutMu(apolet)) {
-			System.out.println("Sonuç bulunamadý");
-		} else {
-			System.out.println(komutanAl(apolet).kimlikAl());
+			return temp;
 		}
 	}
 
-	public void listeYazdir() {
-		if (komutanListesi.size() == 0) {
+	public void listeYazdir(String listelemeKosulu) {
+		
+		Iterator<Komutan> it = komutanListesi.iterator();
+		
+		if (komutanListesi.isEmpty()) {
 			System.out.println("Kayýtlý komutan yok.");
-		} else {
-			Iterator<Komutan> it = komutanListesi.iterator();
-			System.out.println("Kayýtlý komutanlar: (" + komutanListesi.size() + "/" + LIMIT + ")");
-			while (it.hasNext())
-				System.out.println("* " + it.next().kimlikAl());
 		}
+		
+		switch(listelemeKosulu){
+		case "hepsi":
+				System.out.println("Kayýtlý komutanlar: (" + komutanListesi.size() + "/" + LIMIT + ")");
+				while (it.hasNext())
+					System.out.println("* " + it.next().kimlikAl());
+				break;
+		
+		case "A":
+			System.out.println("A tipi komutanlar:");
+			
+			for(int i = 0 ; i < komutanListesi.size(); i++){
+				if(komutanListesi.get(i).komutanTuruAl()=="KomutanA")
+					System.out.println("* " + komutanListesi.get(i).kimlikAl());
+			}
+			break;
+			
+		case "B":
+			System.out.println("B tipi komutanlar:");
+			
+			for(int i = 0 ; i < komutanListesi.size(); i++){
+				if(komutanListesi.get(i).komutanTuruAl()=="KomutanB")
+					System.out.println("* " + komutanListesi.get(i).kimlikAl());
+			}
+			break;
+			
+		case "apolet":
+			System.out.println("Apolet numarasý girin:");
+			int apolet = sc.nextInt();
+			if(komutanAl(apolet) != null){
+				System.out.println("* " + komutanAl(apolet).kimlikAl());
+			}
+			break;
+
+		case "ad":
+			System.out.println("Aradýðýnýz adý girin:");
+			String ad = sc.next();
+			boolean bulundu = false;
+			
+			for(int i = 0 ; i < komutanListesi.size() ; i++){
+				if(komutanListesi.get(i).adAl().toLowerCase(Locale.ROOT).equals(ad.toLowerCase(Locale.ROOT)) ){
+					System.out.println("* " + komutanListesi.get(i).kimlikAl());
+					bulundu = true;
+				}
+			}
+			if(!bulundu){
+				System.out.println("Bu ada sahip bir komutan yok.");
+			}
+			break;
+			
+		case "soyad":
+			System.out.println("Aradýðýnýz soyadý girin:");
+			String soyad = sc.next();
+			bulundu = false;
+			
+			for(int i = 0 ; i < komutanListesi.size() ; i++){
+				if(komutanListesi.get(i).soyadAl().toLowerCase(Locale.ROOT).equals(soyad.toLowerCase(Locale.ROOT))){
+					System.out.println("* " + komutanListesi.get(i).kimlikAl());
+				}
+			}
+			if(!bulundu){
+				System.out.println("Bu soyadýna sahip bir komutan yok.");
+			}
+			break;
+			
+		case "rütbe":
+			System.out.println("Aradýðýnýz rütbeyi girin:");
+			String rutbe = sc.next();
+			bulundu = false;
+			
+			for(int i = 0 ; i < komutanListesi.size() ; i++){
+				if(komutanListesi.get(i).rutbeAl().toLowerCase(Locale.ROOT).equals(rutbe.toLowerCase(Locale.ROOT))){
+					System.out.println("* " + komutanListesi.get(i).kimlikAl());
+				}
+			}
+			if(!bulundu){
+				System.out.println("Bu rütbede bir komutan yok.");
+			}
+			break;
+			
+		}
+		
 
 	}
 

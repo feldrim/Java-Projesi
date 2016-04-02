@@ -56,11 +56,6 @@ public class TemizlikEmri extends Emir {
 		}
 	}
 
-	public void emriUygula() {
-		this.uygulamaDurumuBelirle(true);
-		System.out.println(emirOzeti() + " uygulandý.");
-	}
-
 	@Override
 	public String emirMetni() {
 		return "\nEmir No: " + (emirNoAl()) + "\nTürü: Temizlik\nTemizlik Bölgesi: " + bolgeAdi + "\nTemizlik Türü: "

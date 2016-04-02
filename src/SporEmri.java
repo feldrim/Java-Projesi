@@ -33,12 +33,6 @@ public class SporEmri extends Emir {
 	}
 
 	@Override
-	public void emriUygula() {
-		this.uygulamaDurumuBelirle(true);
-		System.out.println(emirOzeti() + " uygulandý.");
-	}
-
-	@Override
 	public String emirMetni() {
 		return "\nEmir No: " + emirNoAl() 
 				+ "\nTürü: Spor\nHareket Türü: " + hareketTuru 

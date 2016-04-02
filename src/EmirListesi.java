@@ -147,20 +147,105 @@ public class EmirListesi {
 
 	}
 
-	public void emirListesiYazdir() {
+	public void listeYazdir(String listelemeKosulu) { //EmirNo ile arama buraya yazýlacak
+		Iterator<Emir> it = emirListesi.iterator();//diðer koþullarla birlikte sorun çýkardý
+		Tarih sorgulanacakTarih = new Tarih();
+		Komutan emirVeren = null;
+		
 		if (emirListesi.isEmpty()) {
 			System.out.println("Emir listesi boþ");
-		} else {
-			System.out.println("Kayýtlý emirler: (" + emirListesi.size() + "/" + LIMIT + ")");
+			return;
+		}
+		
+		switch(listelemeKosulu){
+		case "hepsi":
+				System.out.println("Kayýtlý emirler: (" + emirListesi.size() + "/" + LIMIT + ")");
+				
+				while (it.hasNext())
+					System.out.println("* " + it.next().emirOzeti());
+				break;
+		
+		case "uygulanmýþ":
+			System.out.println("Uygulanmýþ emirler:");
+		
+			/*
+			 * Bir türlü çalýþmadý, for ile deneyeceðiz.
+			 * Ve for döngüsü ile mucizevi þekilde çalýþtý.
+			while (it.hasNext()){
+				if(it.next().uygulamaDurumuAl()==true)
+					System.out.println("* " + it.next().emirOzeti());
+			}*/
 			
-			
-			Iterator<Emir> it = emirListesi.iterator();
-			while (it.hasNext())
-				System.out.println("* " + it.next().emirOzeti());
+			for(int i = 0 ; i < emirListesi.size(); i++){
+				if(emirListesi.get(i).uygulamaDurumuAl()==true)
+					System.out.println("* " + emirListesi.get(i).emirOzeti());
 			}
+			
+			break;
+		
+		case "uygulanmamýþ":
+			System.out.println("Uygulanmamýþ emirler:");
+		
+			for(int i = 0 ; i < emirListesi.size(); i++){
+				if(emirListesi.get(i).uygulamaDurumuAl()==false)
+					System.out.println("* " + emirListesi.get(i).emirOzeti());
+			}
+			break;
+		
+		case "verilmeTarihi":
+			sorgulanacakTarih = sorgulanacakTarih.tarihAyarla();
+			System.out.println("Verilme Tarihi " + sorgulanacakTarih.tarihAl() + " Olan Emirler:");
+		
+			for(int i = 0 ; i < emirListesi.size(); i++){
+				if(emirListesi.get(i).verilmeTarihiAl().tarihAl().equals(sorgulanacakTarih.tarihAl()))
+					System.out.println("* " + emirListesi.get(i).emirOzeti());
+			}
+			
+			break;
+		
+		case "uygulamaTarihi":
+			sorgulanacakTarih = sorgulanacakTarih.tarihAyarla();
+			System.out.println("Uygulama Tarihi " + sorgulanacakTarih.tarihAl() + " Olan Emirler:");
+					
+			for(int i = 0 ; i < emirListesi.size(); i++){
+				if(emirListesi.get(i).uygulamaTarihiAl().tarihAl().equals(sorgulanacakTarih.tarihAl()))
+					System.out.println("* " + emirListesi.get(i).emirOzeti());
+			}
+			
+			break;
+		
+		case "emirVeren":
+			System.out.println("Apolet numarasý girin:");
+			int apolet = sc.nextInt();
+			
+			for(int i = 0; i < emirListesi.size(); i++){
+				if(emirListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl() == apolet){
+					emirVeren = emirListesi.get(i).emirVerenKomutanAl();
+	
+				}
+			}
+			
+			if(emirVeren == null){
+				System.out.println("Sistemde bu numarayla kayýtlý bir komutan yok.");
+				break;
+			}
+			
+			System.out.println(emirVeren.kimlikAl() + " Tarafýndan Verilen Emirler:");
+			for(int i = 0 ; i < emirListesi.size() ; i++){
+				if(emirListesi.get(i).emirVerenKomutanAl().kimlikAl().equals(emirVeren.kimlikAl())){
+					System.out.println("* " + emirListesi.get(i).emirOzeti());
+				}
+			}
+			
+			break;
+		
+		}
 	}
 
-	public void emirAra(int emirNo) {
+	public void emirNumarasinaGoreAra() {
+		System.out.println("Emir numarasý girin:");
+		int emirNo = sc.nextInt();
+		
 		if (emirNo > emirListesi.size()) {
 			System.out.println("Emir bulunamadý.");
 		} else {
