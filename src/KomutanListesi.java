@@ -13,7 +13,7 @@ public class KomutanListesi {
 	public KomutanListesi() {
 	}
 
-	public void komutanEkle() {
+	public void ekle() {
 		int secim;
 		int gecici;
 		sc = new Scanner(System.in);
@@ -95,12 +95,13 @@ public class KomutanListesi {
 		}
 	}
 
-	public void listeYazdir(String listelemeKosulu) {
+	public void listele(String listelemeKosulu) {
 		
 		Iterator<Komutan> it = komutanListesi.iterator();
 		
 		if (komutanListesi.isEmpty()) {
 			System.out.println("Kayýtlý komutan yok.");
+			return;
 		}
 		
 		switch(listelemeKosulu){
@@ -187,7 +188,7 @@ public class KomutanListesi {
 
 	}
 
-	public void komutanSil() {
+	public void sil() {
 		int apolet;
 		do {
 			System.out.println("Silinmesini istediðiniz komutanýn apolet numarasý:");
@@ -284,12 +285,16 @@ public class KomutanListesi {
 		testListesi.add( new KomutanB(3006, "Harun", "Artýn", "Ütðm.") );
 		testListesi.add( new KomutanB(3007, "Osman", "Dinç", "Ütðm.") );
 		
+		/*
+		 * Debug için ekrana yazdýrýrken kulanýlacak
 		for(int i = 0; i < testListesi.size(); i++){
 			System.out.println(testListesi.get(i).kimlikAl());	
 		}
-				
+		*/	
+		
 		komutanListesi.addAll(testListesi);
-		System.out.println(testListesi.size() + " komutan eklendi.");
+		
+		System.out.println(testListesi.size() + " adet komutan eklendi.");
 
 	}
 }

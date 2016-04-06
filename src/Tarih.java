@@ -13,7 +13,9 @@ public class Tarih {
 		return gun;
 	}
 
-	public void gunBelirle(int gun) {
+	public void gunBelirle(String gunString) {
+		int gun = Integer.parseInt(gunString);//deneme maksatlı yazıldı
+		
 		if (gun > 0 && gun <= 30)
 			this.gun = gun;
 		else
@@ -106,7 +108,9 @@ public class Tarih {
 		return yil;
 	}
 
-	public void yilBelirle(int yil) {
+	public void yilBelirle(String yilString) {
+		int yil = Integer.parseInt(yilString);
+		
 		if (yil >= 2016 && yil <= 2100)
 			this.yil = yil;
 		else
@@ -119,7 +123,7 @@ public class Tarih {
 		this.yil = 2016;
 	}
 
-	public Tarih(int gun, String ay, int yil) {
+	public Tarih(String gun, String ay, String yil) {
 		gunBelirle(gun);
 		ayBelirle(ay);
 		yilBelirle(yil);
@@ -131,11 +135,11 @@ public class Tarih {
 
 	public Tarih tarihAyarla() {
 		System.out.println("Gün:");
-		int gun = sc.nextInt();
+		String gun = sc.next();
 		System.out.println("Ay: ");
 		String ay = sc.next();
 		System.out.println("Yıl: ");
-		int yil = sc.nextInt();
+		String yil = sc.next();
 		return new Tarih(gun, ay, yil);
 	}
 
@@ -151,7 +155,7 @@ public class Tarih {
 
 		int sonrakiYil = ((ay + ((gun + ileri) / 30)) <= 12 ? yil : yil + 1);
 
-		return new Tarih(sonrakiGun, Integer.toString(sonrakiAy), sonrakiYil);
+		return new Tarih( Integer.toString(sonrakiGun), Integer.toString(sonrakiAy), Integer.toString(sonrakiYil) );
 
 	}
 
