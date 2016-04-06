@@ -1,11 +1,16 @@
+import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.Vector;
 
 public class EmirListesi {
 
 	Vector<Emir> emirListesi = new Vector<Emir>();
-	Vector<Integer> emirVerenAtipiKomutanlar = new Vector<Integer>(); //KomutanListesi'ne atsak mý?
+	Vector<Integer> emirVerenAtipiKomutanlar = new Vector<Integer>(); // KomutanListesi'ne
+																		// atsak
+																		// mý?
 	public static final int LIMIT = 100;
 
 	private Scanner sc = new Scanner(System.in);
@@ -15,36 +20,49 @@ public class EmirListesi {
 	public EmirListesi() {
 	}
 
-	public void emirEkle(Tarih bugun, KomutanListesi komutanListesi) {
-		int apolet;
-		
+	public void ekle(Tarih bugun, KomutanListesi komutanListesi) throws Exception {
+		int apolet = 0;
+
 		if (emirListesi.size() == LIMIT) {
 			System.out.println("Daha fazla emir ekleyemezsiniz.");
 			return;
 		}
 
+		// Deneme maksatlý multiple try-catch bloðu kullanýldý. Baþka bir yerde
+		// kullanýlmayacak
 		do {
-			System.out.println("Emri Veren Komutanýn Apolet Numarasý: ");
-			apolet = sc.nextInt();
-			if (apolet == 0) {
-				return;
-			} else if (!komutanListesi.komutanMevcutMu(apolet)) {
-				System.out.println("Komutan Bulunamadý.");
+			try {
+				System.out.println("Emri Veren Komutanýn Apolet Numarasý: ");
+				apolet = sc.nextInt();
+
+				if (!komutanListesi.komutanMevcutMu(apolet)) {
+					throw new Exception("Komutan Bulunamadý.");
+				}
+				break;
+
+			} catch (InputMismatchException e) {
+				System.out.println("Geçerli bir sayý giriniz.");
+				// System.out.println(e.toString());
+				sc.next();
+
+			} catch (Exception ex) {
+				System.out.println(ex.getMessage());
 			}
-		} while (!komutanListesi.komutanMevcutMu(apolet));
+
+		} while (true);
 
 		emirVeren = komutanListesi.komutanAl(apolet);
-		
+
 		System.out.println("Emri veren: " + emirVeren.kimlikAl() + "\n");
-		
-		komutanKisitlariKontrolu(emirVeren); //KomutanA kýsýtlarý kontrolü
+
+		komutanKisitlariKontrolu(emirVeren); // KomutanA kýsýtlarý kontrolü
 
 		System.out.println("Emir No: " + (emirListesi.size() + 1));
 
 		System.out.println("1. Temizlik Emri\n2. Spor Emri");
 		int secim = sc.nextInt();
-		
-		komutanKisitlariKontrolu(emirVeren); //KomutanB kýsýtlarý kontrolü
+
+		komutanKisitlariKontrolu(emirVeren); // KomutanB kýsýtlarý kontrolü
 
 		boolean gecerliSecim = false;
 		do {
@@ -64,21 +82,17 @@ public class EmirListesi {
 				break;
 
 			case 2:
-				System.out.println("Açýklama: ");
-				String hareketTuru = sc.next();
-				
+				System.out.println("Hareket Türü: (1. Þýnav, 2. Mekik, 3. Barfiks)");
+				int hareketTuru = sc.nextInt();
+
 				int tekrarSayisi;
-				do{
+				do {
 					System.out.println("Tekrar sayýsý: ");
 					tekrarSayisi = sc.nextInt();
-					if(tekrarSayisi >= 100)
+					if (tekrarSayisi >= 100)
 						System.out.println("Tekrar sayýsý 100'den fazla olamaz.");
-				}while(tekrarSayisi >= 100);
-				
-				
-				
-				
-				
+				} while (tekrarSayisi >= 100);
+
 				temp = new SporEmri((emirListesi.size() + 1), bugun, null, emirVeren, false, hareketTuru, tekrarSayisi);
 				gecerliSecim = true;
 				break;
@@ -88,7 +102,7 @@ public class EmirListesi {
 				gecerliSecim = false;
 			}
 		} while (!gecerliSecim);
-		
+
 		Tarih uygulamaTarihi = new Tarih();
 
 		do {
@@ -99,17 +113,14 @@ public class EmirListesi {
 				System.out.println("Geçerli bir tarih giriniz.");
 			}
 		} while (bugun.gecerliTarih(uygulamaTarihi) == false);
-		
+
 		temp.uygulamaTarihiBelirle(uygulamaTarihi);
 
 		gecerliSecim = false;
 
 		do {
-			System.out.println("\n\nEmri tekrarlamak istiyor musunuz?" 
-								+ "\n0.  Hayýr" 
-								+ "\n1. Günlük" 
-								+ "\n2. Haftalýk"
-								+ "\n3. Aylýk");
+			System.out.println("\n\nEmri tekrarlamak istiyor musunuz?" + "\n0.  Hayýr" + "\n1. Günlük" + "\n2. Haftalýk"
+					+ "\n3. Aylýk");
 
 			secim = sc.nextInt();
 			int tekrar;
@@ -147,113 +158,117 @@ public class EmirListesi {
 
 	}
 
-	public void listeYazdir(String listelemeKosulu) { //EmirNo ile arama buraya yazýlacak
-		Iterator<Emir> it = emirListesi.iterator();//diðer koþullarla birlikte sorun çýkardý
+	public void listele(String listelemeKosulu) {
+
+		Iterator<Emir> it = emirListesi.iterator();// diðer koþullarla birlikte
+													// sorun çýkardý
 		Tarih sorgulanacakTarih = new Tarih();
 		Komutan emirVeren = null;
-		
+
 		if (emirListesi.isEmpty()) {
 			System.out.println("Emir listesi boþ");
 			return;
 		}
-		
-		switch(listelemeKosulu){
+
+		switch (listelemeKosulu) {
 		case "hepsi":
-				System.out.println("Kayýtlý emirler: (" + emirListesi.size() + "/" + LIMIT + ")");
-				
-				while (it.hasNext())
-					System.out.println("* " + it.next().emirOzeti());
-				break;
-		
+			System.out.println("Kayýtlý emirler: (" + emirListesi.size() + "/" + LIMIT + ")");
+
+			while (it.hasNext())
+				System.out.println("* " + it.next().emirOzeti());
+			break;
+
+		case "emirNo":
+			System.out.println("Emir numarasý girin:");
+			int emirNo = sc.nextInt();
+
+			if (emirNo > emirListesi.size()) {
+				System.out.println("Sistemde bu numara ile kayýtlý bir emir yoktur.");
+			}
+
+			for (int i = 0; i < emirListesi.size(); i++) {
+				if (emirListesi.get(i).emirNoAl() == emirNo)
+					System.out.println("* " + emirListesi.get(i).emirMetni());
+			}
+
+			break;
+
 		case "uygulanmýþ":
 			System.out.println("Uygulanmýþ emirler:");
-		
-			/*
-			 * Bir türlü çalýþmadý, for ile deneyeceðiz.
-			 * Ve for döngüsü ile mucizevi þekilde çalýþtý.
-			while (it.hasNext()){
-				if(it.next().uygulamaDurumuAl()==true)
-					System.out.println("* " + it.next().emirOzeti());
-			}*/
-			
-			for(int i = 0 ; i < emirListesi.size(); i++){
-				if(emirListesi.get(i).uygulamaDurumuAl()==true)
+
+			for (int i = 0; i < emirListesi.size(); i++) {
+				if (emirListesi.get(i).uygulamaDurumuAl() == true)
 					System.out.println("* " + emirListesi.get(i).emirOzeti());
 			}
-			
+
 			break;
-		
+
 		case "uygulanmamýþ":
 			System.out.println("Uygulanmamýþ emirler:");
-		
-			for(int i = 0 ; i < emirListesi.size(); i++){
-				if(emirListesi.get(i).uygulamaDurumuAl()==false)
+
+			for (int i = 0; i < emirListesi.size(); i++) {
+				if (emirListesi.get(i).uygulamaDurumuAl() == false)
 					System.out.println("* " + emirListesi.get(i).emirOzeti());
 			}
 			break;
-		
+
 		case "verilmeTarihi":
 			sorgulanacakTarih = sorgulanacakTarih.tarihAyarla();
 			System.out.println("Verilme Tarihi " + sorgulanacakTarih.tarihAl() + " Olan Emirler:");
-		
-			for(int i = 0 ; i < emirListesi.size(); i++){
-				if(emirListesi.get(i).verilmeTarihiAl().tarihAl().equals(sorgulanacakTarih.tarihAl()))
+
+			for (int i = 0; i < emirListesi.size(); i++) {
+				if (emirListesi.get(i).verilmeTarihiAl().tarihAl().equals(sorgulanacakTarih.tarihAl()))
 					System.out.println("* " + emirListesi.get(i).emirOzeti());
 			}
-			
+
 			break;
-		
+
 		case "uygulamaTarihi":
 			sorgulanacakTarih = sorgulanacakTarih.tarihAyarla();
 			System.out.println("Uygulama Tarihi " + sorgulanacakTarih.tarihAl() + " Olan Emirler:");
-					
-			for(int i = 0 ; i < emirListesi.size(); i++){
-				if(emirListesi.get(i).uygulamaTarihiAl().tarihAl().equals(sorgulanacakTarih.tarihAl()))
+
+			for (int i = 0; i < emirListesi.size(); i++) {
+				if (emirListesi.get(i).uygulamaTarihiAl().tarihAl().equals(sorgulanacakTarih.tarihAl()))
 					System.out.println("* " + emirListesi.get(i).emirOzeti());
 			}
-			
+
 			break;
-		
+
 		case "emirVeren":
 			System.out.println("Apolet numarasý girin:");
 			int apolet = sc.nextInt();
-			
-			for(int i = 0; i < emirListesi.size(); i++){
-				if(emirListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl() == apolet){
+
+			for (int i = 0; i < emirListesi.size(); i++) {
+				if (emirListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl() == apolet) {
 					emirVeren = emirListesi.get(i).emirVerenKomutanAl();
-	
+
 				}
 			}
-			
-			if(emirVeren == null){
+
+			if (emirVeren == null) {
 				System.out.println("Sistemde bu numarayla kayýtlý bir komutan yok.");
 				break;
 			}
-			
+
 			System.out.println(emirVeren.kimlikAl() + " Tarafýndan Verilen Emirler:");
-			for(int i = 0 ; i < emirListesi.size() ; i++){
-				if(emirListesi.get(i).emirVerenKomutanAl().kimlikAl().equals(emirVeren.kimlikAl())){
+			for (int i = 0; i < emirListesi.size(); i++) {
+				if (emirListesi.get(i).emirVerenKomutanAl().kimlikAl().equals(emirVeren.kimlikAl())) {
 					System.out.println("* " + emirListesi.get(i).emirOzeti());
 				}
 			}
-			
+
 			break;
-		
+
 		}
 	}
 
-	public void emirNumarasinaGoreAra() {
-		System.out.println("Emir numarasý girin:");
-		int emirNo = sc.nextInt();
-		
-		if (emirNo > emirListesi.size()) {
-			System.out.println("Emir bulunamadý.");
-		} else {
-			System.out.println("Emir bulundu:\n" + emirListesi.get(emirNo - 1).emirMetni());
-		}
-	}
+	public void sil() {
 
-	public void emirSil() {
+		if (emirListesi.isEmpty()) {
+			System.out.println("Emir listesi boþ");
+			return;
+		}
+
 		System.out.println("Silinecek emir numarasýný yazýn: ");
 		int emirNo = sc.nextInt();
 
@@ -266,56 +281,74 @@ public class EmirListesi {
 	}
 
 	public void emirTekrarla(int tekrar, int periyot) {
-		if(tekrar > 5){
+		if (tekrar > 5) {
 			System.out.println("En fazla 5 kez tekrar edebilirsiniz. Emriniz 5 tekrar olarak alýnmýþtýr.");
 			tekrar = 5;
 		}
 		emirListesi.add(temp);
-		
-		for(int i = 1 ; i < tekrar; i++){
-			
-			if(temp.emirTuruAl() == "TemizlikEmri"){
+
+		for (int i = 1; i < tekrar; i++) {
+
+			if (temp.emirTuruAl() == "TemizlikEmri") {
 				emirListesi.add(new TemizlikEmri());
-				((TemizlikEmri)emirListesi.lastElement()).emirNoBelirle(emirListesi.get(emirListesi.size() - 2).emirNoAl() + 1);
-				((TemizlikEmri)emirListesi.lastElement()).verilmeTarihiBelirle(emirListesi.get(emirListesi.size() - 2).verilmeTarihiAl());
-				((TemizlikEmri)emirListesi.lastElement()).uygulamaTarihiBelirle(emirListesi.get(emirListesi.size() - 2).uygulamaTarihiAl().gunSonra(periyot));
-				((TemizlikEmri)emirListesi.lastElement()).emirVerenKomutanBelirle(emirListesi.get(emirListesi.size() - 2).emirVerenKomutanAl());
-				((TemizlikEmri)emirListesi.lastElement()).uygulamaDurumuBelirle(emirListesi.get(emirListesi.size() - 2).uygulamaDurumuAl());
-				((TemizlikEmri)emirListesi.lastElement()).bolgeAdiBelirle( ( (TemizlikEmri)emirListesi.get(emirListesi.size() - 2)).bolgeAdiAl());
-				((TemizlikEmri)emirListesi.lastElement()).temizlikTuruBelirle( ( (TemizlikEmri)emirListesi.get(emirListesi.size() - 2)).temizlikTuruAl());
-				((TemizlikEmri)emirListesi.lastElement()).kisiSayisiBelirle( ( (TemizlikEmri)emirListesi.get(emirListesi.size() - 2)).kisiSayisiAl());
-				
+				((TemizlikEmri) emirListesi.lastElement())
+						.emirNoBelirle(emirListesi.get(emirListesi.size() - 2).emirNoAl() + 1);
+				((TemizlikEmri) emirListesi.lastElement())
+						.verilmeTarihiBelirle(emirListesi.get(emirListesi.size() - 2).verilmeTarihiAl());
+				((TemizlikEmri) emirListesi.lastElement()).uygulamaTarihiBelirle(
+						emirListesi.get(emirListesi.size() - 2).uygulamaTarihiAl().gunSonra(periyot));
+				((TemizlikEmri) emirListesi.lastElement())
+						.emirVerenKomutanBelirle(emirListesi.get(emirListesi.size() - 2).emirVerenKomutanAl());
+				((TemizlikEmri) emirListesi.lastElement())
+						.uygulamaDurumuBelirle(emirListesi.get(emirListesi.size() - 2).uygulamaDurumuAl());
+				((TemizlikEmri) emirListesi.lastElement())
+						.bolgeAdiBelirle(((TemizlikEmri) emirListesi.get(emirListesi.size() - 2)).bolgeAdiAl());
+				((TemizlikEmri) emirListesi.lastElement())
+						.temizlikTuruBelirle(((TemizlikEmri) emirListesi.get(emirListesi.size() - 2)).temizlikTuruAl());
+				((TemizlikEmri) emirListesi.lastElement())
+						.kisiSayisiBelirle(((TemizlikEmri) emirListesi.get(emirListesi.size() - 2)).kisiSayisiAl());
+
 			} else {
 				emirListesi.add(new SporEmri());
-				((SporEmri)emirListesi.lastElement()).emirNoBelirle(emirListesi.get(emirListesi.size() - 2).emirNoAl() + 1);
-				((SporEmri)emirListesi.lastElement()).verilmeTarihiBelirle(emirListesi.get(emirListesi.size() - 2).verilmeTarihiAl());
-				((SporEmri)emirListesi.lastElement()).uygulamaTarihiBelirle(emirListesi.get(emirListesi.size() - 2).uygulamaTarihiAl().gunSonra(periyot));
-				((SporEmri)emirListesi.lastElement()).emirVerenKomutanBelirle(emirListesi.get(emirListesi.size() - 2).emirVerenKomutanAl());
-				((SporEmri)emirListesi.lastElement()).uygulamaDurumuBelirle(emirListesi.get(emirListesi.size() - 2).uygulamaDurumuAl());
-				((SporEmri)emirListesi.lastElement()).hareketTuruBelirle( ( (SporEmri)emirListesi.get(emirListesi.size() - 2)).hareketTuruAl());
-				((SporEmri)emirListesi.lastElement()).tekrarSayisiBelirle( ( (SporEmri)emirListesi.get(emirListesi.size() - 2)).tekrarSayisiAl());
+				((SporEmri) emirListesi.lastElement())
+						.emirNoBelirle(emirListesi.get(emirListesi.size() - 2).emirNoAl() + 1);
+				((SporEmri) emirListesi.lastElement())
+						.verilmeTarihiBelirle(emirListesi.get(emirListesi.size() - 2).verilmeTarihiAl());
+				((SporEmri) emirListesi.lastElement()).uygulamaTarihiBelirle(
+						emirListesi.get(emirListesi.size() - 2).uygulamaTarihiAl().gunSonra(periyot));
+				((SporEmri) emirListesi.lastElement())
+						.emirVerenKomutanBelirle(emirListesi.get(emirListesi.size() - 2).emirVerenKomutanAl());
+				((SporEmri) emirListesi.lastElement())
+						.uygulamaDurumuBelirle(emirListesi.get(emirListesi.size() - 2).uygulamaDurumuAl());
+				((SporEmri) emirListesi.lastElement())
+						.hareketTuruBelirle(((SporEmri) emirListesi.get(emirListesi.size() - 2)).hareketTuruAl());
+				((SporEmri) emirListesi.lastElement())
+						.tekrarSayisiBelirle(((SporEmri) emirListesi.get(emirListesi.size() - 2)).tekrarSayisiAl());
 			}
-			
+
 		}
 
-		switch(periyot){
+		switch (periyot) {
 		case 0:
 			System.out.println(emirListesi.lastElement().emirOzeti() + " oluþturuldu");
 			break;
 		case 1:
-			System.out.println(emirListesi.lastElement().emirOzeti() + ",\n günlük olarak " + tekrar + " tekrar olacak þekilde oluþturuldu.");
+			System.out.println(emirListesi.lastElement().emirOzeti() + ",\n günlük olarak " + tekrar
+					+ " tekrar olacak þekilde oluþturuldu.");
 			break;
 		case 7:
-			System.out.println(emirListesi.lastElement().emirOzeti() + ",\nhaftada bir kez " + tekrar + " tekrar olacak þekilde oluþturuldu.");
+			System.out.println(emirListesi.lastElement().emirOzeti() + ",\nhaftada bir kez " + tekrar
+					+ " tekrar olacak þekilde oluþturuldu.");
 			break;
 		case 30:
-			System.out.println(emirListesi.lastElement().emirOzeti() + ",\nayda bir kez " + tekrar + " tekrar olacak þekilde oluþturuldu.");
+			System.out.println(emirListesi.lastElement().emirOzeti() + ",\nayda bir kez " + tekrar
+					+ " tekrar olacak þekilde oluþturuldu.");
 			break;
 		}
 	}
 
 	public void gunSonu(Tarih bugun) {
-		
+
 		emirVerenAtipiKomutanlar.clear();
 		int bugunVerilenEmirSayisi = 0;
 		int bugunTamamlananEmirSayisi = 0;
@@ -336,73 +369,79 @@ public class EmirListesi {
 			}
 
 		}
-		
+
 		System.out.println("\n" + bugun.tarihAl() + " tarihinde " + bugunVerilenEmirSayisi + " emir verilmiþ, "
 				+ bugunTamamlananEmirSayisi + " emir tamamlanmýþtýr.");
 	}
 
 	public void testVerisiUret(Tarih bugun, KomutanListesi komutanListesi) {
-		
+
 		System.out.println("Test verisi oluþturuluyor...");
-		
+
 		komutanListesi.testVerisiUret();
-		
+
 		Vector<Emir> testListesi = new Vector<Emir>();
-		testListesi.add( new TemizlikEmri(1, bugun, bugun, komutanListesi.komutanAl(3001), false, "bahçe", 1, 5) );		
-		testListesi.add( new SporEmri(2, bugun, bugun, komutanListesi.komutanAl(3002), false, "Mekik", 50) );
-		testListesi.add( new TemizlikEmri(3, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3004), false, "avlu", 1,7) );
-		testListesi.add( new SporEmri(4, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3005), false, "Þýnav", 50) );
-		testListesi.add( new TemizlikEmri(5, bugun, bugun.gunSonra(2), komutanListesi.komutanAl(3004), false, "avlu", 1,7) );
-		testListesi.add( new TemizlikEmri(6, bugun, bugun.gunSonra(3), komutanListesi.komutanAl(3006), false, "yol", 1,7) );
-			
-		for(int i = 0 ; i < testListesi.size() ; i++ ){
-			System.out.println(testListesi.get(i).emirOzeti());
-			if(testListesi.get(i).emirVerenKomutanAl().komutanTuruAl() == "KomutanA" ){
+		testListesi.add(new TemizlikEmri(1, bugun, bugun, komutanListesi.komutanAl(3001), false, "bahçe", 1, 5));
+		testListesi.add(new SporEmri(2, bugun, bugun, komutanListesi.komutanAl(3002), false, 2, 50));
+		testListesi.add(
+				new TemizlikEmri(3, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3004), false, "avlu", 1, 7));
+		testListesi.add(new SporEmri(4, bugun, bugun.gunSonra(1), komutanListesi.komutanAl(3005), false, 1, 50));
+		testListesi.add(
+				new TemizlikEmri(5, bugun, bugun.gunSonra(2), komutanListesi.komutanAl(3004), false, "avlu", 1, 7));
+		testListesi
+				.add(new TemizlikEmri(6, bugun, bugun.gunSonra(3), komutanListesi.komutanAl(3006), false, "yol", 1, 7));
+
+		for (int i = 0; i < testListesi.size(); i++) {
+			// Debug için kullanýlacak
+			// System.out.println(testListesi.get(i).emirOzeti());
+			if (testListesi.get(i).emirVerenKomutanAl().komutanTuruAl() == "KomutanA") {
 				emirVerenAtipiKomutanlar.add(testListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl());
 			}
 		}
-		
-		System.out.println(testListesi.size() + " adet emir oluþturuldu.");	
-		
-		emirListesi.addAll(testListesi);	
+
+		System.out.println(testListesi.size() + " adet emir oluþturuldu.");
+
+		emirListesi.addAll(testListesi);
 		System.out.println("Test verisi üretildi.");
 
 	}
-	
-	public void komutanKisitlariKontrolu(Komutan komutan){
-		
-			if(komutan.komutanTuruAl().equals("KomutanA")){
-			
+
+	public void komutanKisitlariKontrolu(Komutan komutan) {
+
+		if (komutan.komutanTuruAl().equals("KomutanA")) {
+
 			int bireyselSayac = 0;
-					
-			for(int i = 0; i < emirVerenAtipiKomutanlar.size(); i++){
-				if(emirVerenAtipiKomutanlar.contains(komutan.apoletNumarasýAl())){
+
+			for (int i = 0; i < emirVerenAtipiKomutanlar.size(); i++) {
+				if (emirVerenAtipiKomutanlar.contains(komutan.apoletNumarasýAl())) {
 					bireyselSayac++;
 				}
 			}
-			
-			if(bireyselSayac == 3){
+
+			if (bireyselSayac == 3) {
 				System.out.println("A Tipi bir komutan ayný gün içinde 2'den fazla emir veremez.");
 				emirVerenAtipiKomutanlar.remove(emirVerenAtipiKomutanlar.size() - 1);
 				return;
 			}
-			
-			if(emirVerenAtipiKomutanlar.size() == 6){
+
+			if (emirVerenAtipiKomutanlar.size() == 6) {
 				System.out.println("A Tipi komutanlar ayný gün içinde toplamda 5'ten fazla emir veremezler.");
 				emirVerenAtipiKomutanlar.remove(emirVerenAtipiKomutanlar.size() - 1);
 				return;
 			}
-			
-			//Debug için aþaðýdakini çalýþtýrabiliriz.		
-			//System.out.println("Bugün " + komutan.kimlikAl() + " tarafýndan verilen " + bireyselSayac + ". emir.");
-			
+
+			// Debug için aþaðýdakini çalýþtýrabiliriz.
+			// System.out.println("Bugün " + komutan.kimlikAl() + " tarafýndan
+			// verilen " + bireyselSayac + ". emir.");
+
 			emirVerenAtipiKomutanlar.add(komutan.apoletNumarasýAl());
-			
-		} else if(komutan.komutanTuruAl().equals("KomutanB")) {
-			
-			for(int i = emirListesi.size() - 1 ; i >= 0 ; i--){
-				if(emirListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl() == komutan.apoletNumarasýAl()){
-					if((emirListesi.get(i).emirTuruAl() == "TemizlikEmri") || (emirListesi.get(i).emirTuruAl() == "SporEmri")){
+
+		} else if (komutan.komutanTuruAl().equals("KomutanB")) {
+
+			for (int i = emirListesi.size() - 1; i >= 0; i--) {
+				if (emirListesi.get(i).emirVerenKomutanAl().apoletNumarasýAl() == komutan.apoletNumarasýAl()) {
+					if ((emirListesi.get(i).emirTuruAl() == "TemizlikEmri")
+							|| (emirListesi.get(i).emirTuruAl() == "SporEmri")) {
 						System.out.println("Bir önceki emrinizden farklý bir türde bir emir vermelisiniz.");
 						System.out.println("Bir önceki emriniz:\n" + emirListesi.get(i).emirOzeti());
 						return;
@@ -412,4 +451,5 @@ public class EmirListesi {
 		}
 
 	}
+
 }

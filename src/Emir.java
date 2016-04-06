@@ -71,7 +71,7 @@ public abstract class Emir {
 		System.out.println(emirOzeti() + " uygulandý.");
 	}
 
-	public abstract String emirMetni();
+	public abstract String emirMetni(); //Debugging için, tüm bilgileri yazdýran metot
 
 	public abstract String emirOzeti();
 

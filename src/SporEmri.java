@@ -1,14 +1,19 @@
+import java.util.HashMap;
+
 
 public class SporEmri extends Emir {
-	private String hareketTuru;
+	private int hareketTuru;
 	private int tekrarSayisi;
 
-	public String hareketTuruAl() {
+	public int hareketTuruAl() {
 		return hareketTuru;
 	}
 
-	public void hareketTuruBelirle(String hareketTuru) {
-		this.hareketTuru = hareketTuru;
+	public void hareketTuruBelirle(int hareketTuru) {
+		if(hareketTuru > 3 || hareketTuru < 1)
+			this.hareketTuru = 1;
+		else
+			this.hareketTuru = hareketTuru;
 	}
 
 	public int tekrarSayisiAl() {
@@ -21,21 +26,32 @@ public class SporEmri extends Emir {
 
 	public SporEmri() {
 		super();
-		this.hareketTuru = "";
+		this.hareketTuru = 0;
 		this.tekrarSayisi = 0;
 	}
 
 	public SporEmri(int emirNo, Tarih verilmeTarihi, Tarih uygulamaTarihi, Komutan emirVerenKomutan, boolean uygulamaDurumu,
-			String hareketTuru, int tekrarSayisi) {
+			int hareketTuru, int tekrarSayisi) {
 		super(emirNo, verilmeTarihi, uygulamaTarihi, emirVerenKomutan, uygulamaDurumu);
-		this.hareketTuru = hareketTuru;
-		this.tekrarSayisi = tekrarSayisi;
+		hareketTuruBelirle(hareketTuru);
+		tekrarSayisiBelirle(tekrarSayisi);
 	}
+	
+	private String hareketTuruString() {
+		
+	HashMap<Integer, String> hareketTuruMap = new HashMap<Integer, String>();
+	hareketTuruMap.put(1, "Þýnav");
+	hareketTuruMap.put(2, "Mekik");
+	hareketTuruMap.put(3, "Barfiks");
+	
+	return hareketTuruMap.get(hareketTuru);
+	}
+	
 
 	@Override
 	public String emirMetni() {
 		return "\nEmir No: " + emirNoAl() 
-				+ "\nTürü: Spor\nHareket Türü: " + hareketTuru 
+				+ "\nTürü: Spor\nHareket Türü: " + hareketTuruString() 
 				+ "\nTekrar Sayýsý: " + tekrarSayisi 
 				+ "\nVerilme Tarihi: " + verilmeTarihiAl().tarihAl() 
 				+ "\nUygulama Tarihi: "	+ uygulamaTarihiAl().tarihAl() 
@@ -46,7 +62,7 @@ public class SporEmri extends Emir {
 	@Override
 	public String emirOzeti() {
 		return "Emir No: " + emirNoAl() + ", " + emirVerenKomutanAl().kimlikAl() + " tarafýndan verilen spor emri ("
-				+ hareketTuru + ", " + tekrarSayisi + " tekrar)" + (uygulamaDurumuAl() == true ? " (+)" : "");
+				+ hareketTuruString() + ", " + tekrarSayisi + " tekrar)" + (uygulamaDurumuAl() == true ? " (+)" : "");
 	}
 
 }

@@ -17,11 +17,12 @@ import java.util.Scanner;
 
 public class MainClass {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 
 		KomutanListesi komutanListesi = new KomutanListesi();
 		EmirListesi emirListesi = new EmirListesi();
 		Tarih bugun = new Tarih();
+		Ýstatistikler ist = new Ýstatistikler();
 
 		Scanner sc = new Scanner(System.in);
 
@@ -29,7 +30,7 @@ public class MainClass {
 
 		while (true) {
 			System.out.println(
-					"\n          <Emir Kayýt Programý>               <" + bugun.tarihAl() + ">\n" 
+					"\n\t\t<Emir Kayýt Programý>\t\t\t<" + bugun.tarihAl() + ">\n" 
 					+ "\n1. Emir Ýþlemleri"
 					+ "\n2. Komutan Ýþlemleri" 
 					+ "\n3. Ýstatistikler"
@@ -43,7 +44,7 @@ public class MainClass {
 				boolean cikis = false;
 				while(cikis == false){
 					System.out.println(
-							"\n          <Emir Kayýt Programý>               <" + bugun.tarihAl() + ">\n" 
+							"\n\t\t<Emir Kayýt Programý>\t\t\t<" + bugun.tarihAl() + ">\n" 
 							+ "\n1. EMÝR ÝÞLEMLERÝ"
 							+ "\n\t1. Emir Ekle" 
 							+ "\n\t2. Emir Sil" //Debug için geçerli, sonra yalnýz son yazýlan emri silme þeklinde düzeltilecek
@@ -59,31 +60,31 @@ public class MainClass {
 					int secim = sc.nextInt();
 					switch(secim){
 					case 1:
-						emirListesi.emirEkle(bugun, komutanListesi);
+						emirListesi.ekle(bugun, komutanListesi);
 						break;
 					case 2:
-						emirListesi.emirSil();
+						emirListesi.sil();
 						break;
 					case 3:
-						emirListesi.emirNumarasinaGoreAra();
+						emirListesi.listele("emirNo");
 						break;
 					case 4:
-						emirListesi.listeYazdir("hepsi");
+						emirListesi.listele("hepsi");
 						break;
 					case 5:
-						emirListesi.listeYazdir("uygulanmýþ");
+						emirListesi.listele("uygulanmýþ");
 						break;
 					case 6:
-						emirListesi.listeYazdir("uygulanmamýþ");
+						emirListesi.listele("uygulanmamýþ");
 						break;
 					case 7:
-						emirListesi.listeYazdir("verilmeTarihi");
+						emirListesi.listele("verilmeTarihi");
 						break;
 					case 8:
-						emirListesi.listeYazdir("uygulamaTarihi");
+						emirListesi.listele("uygulamaTarihi");
 						break;
 					case 9:
-						emirListesi.listeYazdir("emirVeren");
+						emirListesi.listele("emirVeren");
 						break;
 					case 0:
 						cikis = true;
@@ -98,7 +99,7 @@ public class MainClass {
 				cikis = false;
 				while(cikis == false){
 					System.out.println(
-							"\n          <Emir Kayýt Programý>               <" + bugun.tarihAl() + ">\n" 
+							"\n\t\t<Emir Kayýt Programý>\t\t\t<" + bugun.tarihAl() + ">\n" 
 							+ "\n2. KOMUTAN ÝÞLEMLERÝ"
 							+ "\n\t1. Komutan Ekle" 
 							+ "\n\t2. Komutan Sil"
@@ -115,34 +116,34 @@ public class MainClass {
 					int secim = sc.nextInt();
 					switch(secim){
 					case 1:
-						komutanListesi.komutanEkle();
+						komutanListesi.ekle();
 						break;
 					case 2:
-						komutanListesi.komutanSil();
+						komutanListesi.sil();
 						break;
 					case 3:
 						komutanListesi.bilgiGuncelle();
 						break;
 					case 4:
-						komutanListesi.listeYazdir("hepsi");
+						komutanListesi.listele("hepsi");
 						break;
 					case 5:
-						komutanListesi.listeYazdir("A");
+						komutanListesi.listele("A");
 						break;
 					case 6:
-						komutanListesi.listeYazdir("B");
+						komutanListesi.listele("B");
 						break;
 					case 7:
-						komutanListesi.listeYazdir("apolet");
+						komutanListesi.listele("apolet");
 						break;
 					case 8:
-						komutanListesi.listeYazdir("ad");
+						komutanListesi.listele("ad");
 						break;
 					case 9:
-						komutanListesi.listeYazdir("soyad");
+						komutanListesi.listele("soyad");
 						break;
 					case 10:
-						komutanListesi.listeYazdir("rutbe");
+						komutanListesi.listele("rutbe");
 						break;
 					case 0:
 						cikis = true;
@@ -152,7 +153,39 @@ public class MainClass {
 					}
 			}
 			break;
-
+			
+			case 3:
+				
+				cikis = false;
+				while(cikis == false){
+					System.out.println(
+							"\n\t\t<Emir Kayýt Programý>\t\t\t<" + bugun.tarihAl() + ">\n" 
+							+ "\n3. ÝSTATÝSTÝKLER"
+							+ "\n\t1. Detaylý Arama" 
+							+ "\n\t2. Komutan Ýstatistikleri"
+							+ "\n\t3. Emir Ýstatistikleri"
+							+ "\n\t0. GERÝ");
+					
+					int secim = sc.nextInt();
+					switch(secim){
+					case 1:
+						ist.detayliArama(emirListesi);
+						break;
+					case 2:
+						ist.komutanIstatistikleri(emirListesi, komutanListesi);
+						break;
+					case 3:
+						ist.emirIstatistikleri(emirListesi, komutanListesi);
+						break;
+					case 0:
+						cikis = true;
+						break;
+					default:
+						System.out.println("Geçerli bir seçim yapýnýz.");
+					}
+			}
+			break;
+			
 			case 9:
 				emirListesi.testVerisiUret(bugun, komutanListesi);
 				break;

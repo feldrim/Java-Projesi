@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 
 public class TemizlikEmri extends Emir {
 	private String bolgeAdi;
@@ -17,7 +19,10 @@ public class TemizlikEmri extends Emir {
 	}
 
 	public void temizlikTuruBelirle(int temizlikTuru) {
-		this.temizlikTuru = temizlikTuru;
+		if(temizlikTuru > 3 || temizlikTuru < 1)
+			this.temizlikTuru = 1;
+		else
+			this.temizlikTuru = temizlikTuru;
 	}
 
 	public int kisiSayisiAl() {
@@ -44,16 +49,14 @@ public class TemizlikEmri extends Emir {
 	}
 
 	private String temizlikTuruString() {
-		switch (temizlikTuru) {
-		case 1:
-			return "Mıntıka Temizliği";
-		case 2:
-			return "Kış Temizliği";
-		case 3:
-			return "Peyzaj Faaliyeti";
-		default:
-			return "Genel Temizlik";
-		}
+		
+		HashMap<Integer, String> temizlikTuruMap = new HashMap<Integer, String>();
+		temizlikTuruMap.put(1, "Mıntıka Temizliği");
+		temizlikTuruMap.put(2, "Kış Temizliği");
+		temizlikTuruMap.put(3, "Peyzaj Faaliyeti");
+		
+		return temizlikTuruMap.get(temizlikTuru);
+		
 	}
 
 	@Override
