@@ -3,7 +3,7 @@
 ## Mimari
 Projenin Sınıf diyagramı Visual Paradigm ile reverse edilerek elde edilmiştir. Büyük boyutu için [buraya](https://raw.githubusercontent.com/feldrim/Java-Projesi/Proje/Class%20Diagram.jpg) tıklayın.
 
-[UML Diyagramı](https://github.com/feldrim/Java-Projesi/blob/Proje/Class Diagram.jpg)
+![UML Diyagramı](https://github.com/feldrim/Java-Projesi/blob/Proje/Class%20Diagram.jpg)
 
 ## İsterler
 
